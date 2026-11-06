@@ -48,7 +48,7 @@ Write your code, save your files, and make frequent commits.
 ```Bash
 git add . # Add the current folder to the commit
 git commit -m "feat: brief description of what you just did" # Add a msg to the commit
-git push origin feature/your-task-name # Save your commit on cloud (updating your branch)
+git push origin <branch-name> # Save your commit on cloud (updating your branch)
 ```
 
 4. **When finishing the task (Integrate into main)**
