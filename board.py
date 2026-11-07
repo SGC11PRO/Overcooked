@@ -30,8 +30,9 @@ class Board:
         self.board_size = board_size
         
         # Create chef objs
-        self.chef1 = Chef(10, 10, 0, 0)
-        self.chef2 = Chef(10, 50, 16, 0)
+        # 2 chef styles (img_x) -> 0, 16 or 32, 48
+        self.chef1 = Chef(10, 10, 32, 0)
+        self.chef2 = Chef(10, 50, 48, 0)
         
         
         # Setup pyxel environment
