@@ -1,18 +1,20 @@
 class Chef:
     """Documentation..."""
     
-    def __init__(self, x:int, y:int):
+    def __init__(self, x:int, y:int, img_x:int=0, img_y:int=0):
         """
         Init method
         :param x: x position
         :param y: y position
+        :param img_x: x position of the image in the image bank
+        :param img_y: y position of the image in the image bank
         """
         
         self.x = x
         self.y = y
         
         # tuple (image_bank, x, y, h_size, v_size)
-        self.image = (0, 0, 0, 16, 16)
+        self.image = (0, img_x, img_y, 16, 16)
         self.has_dish = False
         
     # CHEF BEHAVIOUR ------------------------------------------

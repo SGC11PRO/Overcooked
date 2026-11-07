@@ -30,8 +30,8 @@ class Board:
         self.board_size = board_size
         
         # Create chef objs
-        self.chef1 = Chef(10, 10)
-        self.chef2 = Chef(10, 50)
+        self.chef1 = Chef(10, 10, 0, 0)
+        self.chef2 = Chef(10, 50, 16, 0)
         
         
         # Setup pyxel environment
@@ -43,7 +43,7 @@ class Board:
             quit_key=pyxel.KEY_ESCAPE, 
             display_scale=4)
     
-        pyxel.load('assets/example.pyxres')
+        pyxel.load('assets/overcooked.pyxres')
         pyxel.run(self.update, self.draw)
     
     # BOARD LOGIC ------------------------------------------
