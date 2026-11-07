@@ -21,7 +21,7 @@
     - Bin
     - Stack of dishes
 
-- Foundations
+- Environment
     - Hand-over surface -> can hold items
     - Floor
     - Solid wall -> cannot hold items. Only to separate top/bottom zones
