@@ -3,7 +3,7 @@ import pyxel
 # Initial objects on the board
 from components.chefs.chef import Chef
 from components.floor import Floor
-from components.serivice_board.timer import Timer
+from components.service_board.timer import Timer
 
 # Input mapping
 chef1_right = pyxel.KEY_RIGHT
