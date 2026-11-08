@@ -90,7 +90,7 @@ class Board:
         # Update timer every frame
         self.frame_count += 1
         if self.frame_count == self.fps:
-            self.main_timer.decrese(1)
+            self.main_timer.decrease(1)
             self.frame_count = 0
             
     def draw(self):

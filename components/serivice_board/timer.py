@@ -12,7 +12,7 @@ class Timer:
         self.total_seconds = total_seconds
         
 
-    def decrese(self, s: int):
+    def decrease(self, s: int):
         """ Decrese s seconds
         :param s: seconds to decrease
         """
