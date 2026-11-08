@@ -31,11 +31,8 @@ class Board:
         # board size
         self.board_size = board_size
 
-        # Service board size
-        self.service_board_width = board_size[0]
-        self.service_board_height = 32
-
-        self.service_board_size = (self.service_board_width, self.service_board_height)
+        # Service board size (width, height -> fixed to 32px)
+        self.service_board_size = (board_size[0], 32)
 
         # fps
         self.fps = 60
@@ -104,7 +101,7 @@ class Board:
 
         # Draw floor on every tile based on boarsize
         # step=16 since sprites are 16x16 sized, so they dont overlap
-        for y_tile in range(self.service_board_height, self.board_size[1], 16):
+        for y_tile in range(self.service_board_size[1], self.board_size[1], 16):
             for x_tile in range(0, self.board_size[0], 16):
                 # create floor obj on each tile
                 floor = Floor(x_tile, y_tile)
@@ -122,7 +119,7 @@ class Board:
         pyxel.text(self.board_size[0] - 50, 10, f"({self.chef2.x}, {self.chef2.y})", 7)
 
         # draw timer
-        self.main_timer.draw_timer(self.service_board_width - 50, self.service_board_height - 10, 7)
+        self.main_timer.draw_timer(self.service_board_size[0] - 50, self.service_board_size[1] - 10, 7)
 
     
     # ERROR HANDLING ---------------------------------------
