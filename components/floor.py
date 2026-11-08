@@ -1,7 +1,10 @@
 class Floor:
+    """ Docs... """
     def __init__(self, x_position: int, y_position: int):
         """
-        Docs...
+        Init method
+        :param x_position: x position
+        :param y_position: y position
         """
 
         self.x = x_position
