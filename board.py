@@ -2,6 +2,7 @@ import pyxel
 
 # Initial objects on the board
 from components.chefs.chef import Chef
+from components.floor import Floor
 
 # Input mapping
 chef1_right = pyxel.KEY_RIGHT
@@ -15,6 +16,7 @@ chef2_left = pyxel.KEY_A
 chef2_up = pyxel.KEY_W
 chef2_down = pyxel.KEY_S
 chef2_interact = pyxel.KEY_LSHIFT
+
 
 class Board:
     """Documentation..."""
@@ -33,8 +35,7 @@ class Board:
         # 2 chef styles (img_x) -> 0, 16 or 32, 48
         self.chef1 = Chef(10, 10, 32, 0)
         self.chef2 = Chef(10, 50, 48, 0)
-        
-        
+
         # Setup pyxel environment
         pyxel.init(
             self.board_size[0], 
@@ -77,6 +78,20 @@ class Board:
         """Executed in every frame. Logic to draw sprites on the screen"""
         # erasing previous screen
         pyxel.cls(0)
+
+
+        # [!] Important to draw the floor before everything else, so the rest of elements
+        # are rendered above the floor tiles, and not behind
+
+        # Draw floor on every tile based on boarsize
+        # step=16 since sprites are 16x16 sized, so they dont overlap
+        for y_tile in range(0, self.board_size[1], 16):
+            for x_tile in range(0, self.board_size[0], 16):
+                # create floor obj on each tile
+                floor = Floor(x_tile, y_tile)
+
+                # draw floor
+                pyxel.blt(floor.x, floor.y, *floor.image)
         
         # drawing chefs
         pyxel.blt(self.chef1.x, self.chef1.y, *self.chef1.image)

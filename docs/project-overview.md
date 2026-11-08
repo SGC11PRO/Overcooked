@@ -22,9 +22,9 @@
     - Stack of dishes
 
 - Environment
-    - Hand-over surface -> can hold items
+    - Hand-over surface -> can hold items -> Worktop (hold_items = True)
     - Floor
-    - Solid wall -> cannot hold items. Only to separate top/bottom zones
+    - Solid wall -> cannot hold items. Only to separate top/bottom zones -> Worktop (hold_items = False)
 
 - Objects
     - Dishes
