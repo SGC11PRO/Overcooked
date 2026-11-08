@@ -39,8 +39,8 @@ class Board:
         
         # Create chef objs
         # 2 chef styles (img_x) -> 0, 16 or 32, 48
-        self.chef1 = Chef(10, 10, 32, 0)
-        self.chef2 = Chef(10, 50, 48, 0)
+        self.chef1 = Chef(10, 50, 32, 0)
+        self.chef2 = Chef(30, 50, 48, 0)
 
         # Create timer object
         self.main_timer = Timer(150)
@@ -115,11 +115,11 @@ class Board:
     
         
         # text position -> pyxel.text(x, y, text, color)
-        pyxel.text(10, 10, f"({self.chef1.x}, {self.chef1.y})", 7)    
-        pyxel.text(self.board_size[0] - 50, 10, f"({self.chef2.x}, {self.chef2.y})", 7)
+        pyxel.text(10, 8, f"({self.chef1.x}, {self.chef1.y})", 7)    
+        pyxel.text(10, 18, f"({self.chef2.x}, {self.chef2.y})", 7)
 
         # draw timer
-        self.main_timer.draw_timer(self.service_board_size[0] - 50, self.service_board_size[1] - 10, 7)
+        self.main_timer.draw_timer(self.service_board_size[0] - 30, 10, 7)
 
     
     # ERROR HANDLING ---------------------------------------
