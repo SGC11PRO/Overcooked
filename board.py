@@ -39,12 +39,12 @@ class Board:
         self.frame_count = 0
 
         # Create timer obj (seconds)
-        self.main_timer = Timer(210) 
+        self.main_timer = Timer(180) 
         
         # Create chef objs
         # 2 chef styles (img_x) -> 0, 16 or 32, 48
-        self.chef1 = Chef(10, 10, 16, 16)
-        self.chef2 = Chef(10, 50, 32, 16)
+        self.chef1 = Chef(96, 136, 16, 16)
+        self.chef2 = Chef(96, 136, 32, 16)
 
         # Setup pyxel environment
         pyxel.init(
