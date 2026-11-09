@@ -31,11 +31,15 @@ class Board:
         # board size
         self.board_size = board_size
 
-        # Service board size (width, height -> fixed to 32px)
+        # Service board size (width, Creatingheight -> fixed to 32px)
         self.service_board_size = (board_size[0], 32)
 
         # fps
         self.fps = 60
+        self.frame_count = 0
+
+        # Create timer obj (seconds)
+        self.main_timer = Timer(210) 
         
         # Create chef objs
         # 2 chef styles (img_x) -> 0, 16 or 32, 48
