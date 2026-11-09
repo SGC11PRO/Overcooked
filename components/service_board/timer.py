@@ -5,11 +5,10 @@ class Timer:
     timers for each order"""
     def __init__(self, total_seconds: int):
         """
-        :param x: x position of the text
-        :param y: y position of the text
-        :param s: seconds
+        :param total_seconds: seconds
         """
         self.total_seconds = total_seconds
+        self.frame_count = 0
         
 
     def decrease(self, s: int):
@@ -21,7 +20,7 @@ class Timer:
         else:
             self.total_seconds = 0
 
-    def draw_timer(self, x: int, y: int, col: int):
+    def draw(self, x: int, y: int, col: int):
         """
         :param x: x position
         :param y: y position
@@ -41,6 +40,15 @@ class Timer:
         self.s = self.total_seconds % 60
         
         pyxel.text(x, y, f"{self.m}:{self.s:02}", col)
+    
+    def update(self, fps: int):
+        """
+        :param fps: frames per second
+        """
+        self.frame_count += 1
+        if self.frame_count >= fps:
+            self.decrease(1)
+            self.frame_count = 0
 
 
 

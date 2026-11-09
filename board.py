@@ -4,6 +4,7 @@ import pyxel
 from components.chefs.chef import Chef
 from components.floor import Floor
 from components.service_board.timer import Timer
+from components.service_board.order import Order
 
 # Input mapping
 chef1_right = pyxel.KEY_RIGHT
@@ -32,10 +33,13 @@ class Board:
         
         # fps
         self.fps = 60
-        self.frame_count = 0
 
         # Create timer obj (seconds)
         self.main_timer = Timer(180) 
+
+        # Create test orders
+        self.order_list = []
+        self.order_list.append(Order("gazpacho"))
         
         # Create chef objs
         self.chef1 = Chef(50, 50, 0, 16)
@@ -77,11 +81,17 @@ class Board:
         if pyxel.btn(chef2_down):
             self.chef2.move('down', self.board_size)
 
-        # Update timer every second
-        self.frame_count += 1
-        if self.frame_count >= self.fps:
-            self.main_timer.decrease(1)
-            self.frame_count = 0
+        # Updates timer class
+        self.main_timer.update(self.fps)
+
+        # Updates order class (Iterating through a shallow copy)
+        for order in self.order_list[:]:
+            # Update all orders
+            order.update(self.fps)
+            # Deletes unavailable orders (done or time's over)
+            if not order.available:
+                self.order_list.remove(order)
+        
             
     def draw(self):
         """Executed in every frame. Logic to draw sprites on the screen"""
@@ -110,9 +120,12 @@ class Board:
         pyxel.text(10, 18, f"Chef 2: ({self.chef2.x}, {self.chef2.y})", 7)
 
         # Draw timer inside the service board area
-        self.main_timer.draw_timer(self.board_size[0] - 40, 10, 7)
+        self.main_timer.draw(self.board_size[0] - 40, 10, 7)
 
-    
+        # Draw orders inside the service board area
+        if self.order_list:
+            self.order_list[0].draw(80, 0)
+
     # ERROR HANDLING ---------------------------------------
     @property
     def size(self) -> tuple:
