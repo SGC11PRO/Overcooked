@@ -1,3 +1,6 @@
+# We can enlarge pyxel color palette by defining a file with the extension .pyxpal and adding there the hex codes of the
+# colors of the palette. More info at: https://github.com/kitao/pyxel/blob/main/docs/pyxres-format.md
+
 from board import Board
 
 # Constants

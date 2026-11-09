@@ -33,8 +33,8 @@ class Board:
         
         # Create chef objs
         # 2 chef styles (img_x) -> 0, 16 or 32, 48
-        self.chef1 = Chef(10, 10, 32, 0)
-        self.chef2 = Chef(10, 50, 48, 0)
+        self.chef1 = Chef(10, 10, 16, 16)
+        self.chef2 = Chef(10, 50, 32, 16)
 
         # Setup pyxel environment
         pyxel.init(
@@ -44,7 +44,7 @@ class Board:
             fps=60, 
             quit_key=pyxel.KEY_ESCAPE, 
             display_scale=4)
-    
+
         pyxel.load('assets/overcooked.pyxres')
         pyxel.run(self.update, self.draw)
     
@@ -93,9 +93,9 @@ class Board:
                 # draw floor
                 pyxel.blt(floor.x, floor.y, *floor.image)
         
-        # drawing chefs
-        pyxel.blt(self.chef1.x, self.chef1.y, *self.chef1.image)
-        pyxel.blt(self.chef2.x, self.chef2.y, *self.chef2.image)
+        # drawing chefs -> colkey sets the transparent color by entering the color index on the palette (32 -> black)
+        pyxel.blt(self.chef1.x, self.chef1.y, *self.chef1.image, colkey=32)
+        pyxel.blt(self.chef2.x, self.chef2.y, *self.chef2.image, colkey=32)
     
         
         # text position -> pyxel.text(x, y, text, color)
