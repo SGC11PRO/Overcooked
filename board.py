@@ -38,8 +38,8 @@ class Board:
         self.main_timer = Timer(180) 
         
         # Create chef objs
-        self.chef1 = Chef(96, 136, 0, 0)
-        self.chef2 = Chef(96, 136, 0, 16)
+        self.chef1 = Chef(50, 50, 0, 16)
+        self.chef2 = Chef(50, 120, 0, 32)
 
         # Setup pyxel environment
         pyxel.init(
@@ -88,14 +88,16 @@ class Board:
         # Erasing previous screen
         pyxel.cls(0)
 
-        # Background ==========================================
-        # Draw floor tiles
-        start_y = 32 
 
-        for y_tile in range(start_y, self.board_size[1], 16):
-            for x_tile in range(0, self.board_size[0], 16):
-                floor_image = (0, 0, 240, 16, 16) 
-                pyxel.blt(x_tile, y_tile, *floor_image)
+        # Draw scene using tilemaps
+        # pyxel.bltm(x, y, tm, u, v, w, h, [colkey])
+        # x, y -> Position of tilemap on the screen (in pixels)
+        # tm -> tilemap bank (0-2) where the tilemap is stored
+        # u, v -> tile coordinates where the tilemap starts 
+        # w, h -> Width and height of the tilemap to draw 
+
+        # draw tilemap for kitchen + service board
+        pyxel.bltm(0, 0, 0, 0, 0, self.board_size[0], self.board_size[1], colkey=32)
 
 
         # Objects ==========================================
