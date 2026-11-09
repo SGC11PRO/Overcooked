@@ -10,7 +10,8 @@ class Floor:
         self.x = x_position
         self.y = y_position
 
-        self.image = (0, 0, 16, 16, 16)
+        # image (bank, x, y, width, height)
+        self.image = (0, 0, 240, 16, 16)
 
 
     # ERROR HANDLING -------------------------------------
