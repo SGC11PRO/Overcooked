@@ -89,7 +89,8 @@ class Board:
         pyxel.cls(0)
 
 
-        # Draw scene using tilemaps
+        # Draw scene using tilemaps ==========================================
+
         # pyxel.bltm(x, y, tm, u, v, w, h, [colkey])
         # x, y -> Position of tilemap on the screen (in pixels)
         # tm -> tilemap bank (0-2) where the tilemap is stored
