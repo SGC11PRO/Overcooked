@@ -3,6 +3,7 @@ import pyxel
 # Initial objects on the board
 from components.chefs.chef import Chef
 from components.floor import Floor
+from components.service_board.timer import Timer
 
 # Input mapping
 chef1_right = pyxel.KEY_RIGHT
@@ -24,12 +25,17 @@ class Board:
     def __init__(self, board_size: tuple):
         """
         Documentation...
-        :param width: board width
-        :param height: board height
+        :param board_size: Tuple (width, height) for board
         """
         
         # board size
         self.board_size = board_size
+
+        # Service board size (width, height -> fixed to 32px)
+        self.service_board_size = (board_size[0], 32)
+
+        # fps
+        self.fps = 60
         
         # Create chef objs
         # 2 chef styles (img_x) -> 0, 16 or 32, 48
@@ -41,7 +47,7 @@ class Board:
             self.board_size[0], 
             self.board_size[1], 
             title='Overcooked', 
-            fps=60, 
+            fps=self.fps, 
             quit_key=pyxel.KEY_ESCAPE, 
             display_scale=4)
 
@@ -73,6 +79,12 @@ class Board:
             self.chef2.move('up', self.board_size)
         if pyxel.btn(chef2_down):
             self.chef2.move('down', self.board_size)
+
+        # Update timer every frame
+        self.frame_count += 1
+        if self.frame_count == self.fps:
+            self.main_timer.decrease(1)
+            self.frame_count = 0
             
     def draw(self):
         """Executed in every frame. Logic to draw sprites on the screen"""
@@ -85,7 +97,7 @@ class Board:
 
         # Draw floor on every tile based on boarsize
         # step=16 since sprites are 16x16 sized, so they dont overlap
-        for y_tile in range(0, self.board_size[1], 16):
+        for y_tile in range(self.service_board_size[1], self.board_size[1], 16):
             for x_tile in range(0, self.board_size[0], 16):
                 # create floor obj on each tile
                 floor = Floor(x_tile, y_tile)
@@ -99,8 +111,12 @@ class Board:
     
         
         # text position -> pyxel.text(x, y, text, color)
-        pyxel.text(10, 10, f"({self.chef1.x}, {self.chef1.y})", 7)    
-        pyxel.text(self.board_size[0] - 50, 10, f"({self.chef2.x}, {self.chef2.y})", 7)    
+        pyxel.text(10, 8, f"({self.chef1.x}, {self.chef1.y})", 7)    
+        pyxel.text(10, 18, f"({self.chef2.x}, {self.chef2.y})", 7)
+
+        # draw timer
+        self.main_timer.draw_timer(self.service_board_size[0] - 30, 10, 7)
+
     
     # ERROR HANDLING ---------------------------------------
     # properties

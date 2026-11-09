@@ -20,13 +20,14 @@ class Chef:
     # CHEF BEHAVIOUR ------------------------------------------
     def move(self, direction: str, board_size: tuple):
         """
-        Move the chef inside the screen/area. Collissions not implemented
+        Move the chef inside the kitchen, which starts at y=32. Collissions not implemented
         :param direction: string "up", "down", "left", "right"
         :param board_size: tuple (x_size, y_size), to check screen limits
         """
         # convert direction to lowercase
         direction = direction.lower()    
-        DIRECTIONS = ('left', 'right', 'up', 'down')
+        DIRECTIONS = ('left', 'right', 'up', 'down') 
+        
         # validate parameters
         if not isinstance(direction, str):
             raise TypeError('direction must be a string')
@@ -51,7 +52,7 @@ class Chef:
         elif direction == 'down' and self.y + self.image[4] < board_size[1]:
             self.y += 1
         
-        elif direction == 'up' and self.y > 0:
+        elif direction == 'up' and self.y > 32:
             self.y -= 1
     
     # ERROR HANDLING ------------------------------------------
