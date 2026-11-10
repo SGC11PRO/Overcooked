@@ -70,6 +70,8 @@ class Board:
             self.chef1.move('up', self)
         if pyxel.btn(chef1_down):
             self.chef1.move('down', self)
+        if pyxel.btn(chef1_interact):
+            self.chef1.interact(5)    
                 
         # Chef 2 controls (WASD)
         if pyxel.btn(chef2_right):
@@ -80,9 +82,15 @@ class Board:
             self.chef2.move('up', self)
         if pyxel.btn(chef2_down):
             self.chef2.move('down', self)
+        if pyxel.btn(chef2_interact):
+            self.chef2.interact(5)
 
         # Updates timer class
         self.main_timer.update(self.fps)
+
+        # Updates chef calsses
+        self.chef1.update(self.fps)
+        self.chef2.update(self.fps)
 
         # Updates order class (Iterating through a shallow copy)
         for order in self.order_list[:]:
@@ -126,6 +134,10 @@ class Board:
         # Draw orders inside the service board area
         if self.order_list:
             self.order_list[0].draw(80, 0)
+
+        # Draw interact actions for chefs
+        self.chef1.draw()
+        self.chef2.draw()
 
     # ERROR HANDLING ---------------------------------------
     @property
