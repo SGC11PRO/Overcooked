@@ -1,5 +1,5 @@
 import pyxel
-
+from components.service_board.timer import Timer
 
 class Chef:
     """Documentation..."""
@@ -20,7 +20,13 @@ class Chef:
         self.image = (0, img_x, img_y, 16, 16)
         self.has_dish = False
 
+        # Acting check
         self.is_acting = False
+
+        # Timer and frame counter
+        self.frame_count = 0
+        self.timer = Timer(0)
+        
         
     # CHEF BEHAVIOUR ------------------------------------------
     def move(self, direction: str, board):
@@ -65,11 +71,24 @@ class Chef:
         :param time: The time the action takes
         """
         self.is_acting = True
+        self.timer.total_seconds = time
 
+    def update(self, fps: int):
+        """
+        :param fps: frames per second
+        """
+        self.frame_count += 1
+        if self.frame_count >= fps:
+            self.timer.decrease(1)
+            self.frame_count = 0
+        
+        if self.timer.total_seconds == 0:
+            self.is_acting = False
+
+    def draw(self):
         if self.is_acting:
             # Show text
-            pyxel.text(self.x, self.y - 8, "Action", 7)
-
+            pyxel.text(self.x, self.y - 8, "Action", 32)
 
         
     
