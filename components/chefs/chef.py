@@ -1,3 +1,6 @@
+import pyxel
+
+
 class Chef:
     """Documentation..."""
     
@@ -16,6 +19,8 @@ class Chef:
         # tuple (image_bank, x, y, h_size, v_size)
         self.image = (0, img_x, img_y, 16, 16)
         self.has_dish = False
+
+        self.is_acting = False
         
     # CHEF BEHAVIOUR ------------------------------------------
     def move(self, direction: str, board):
@@ -52,6 +57,21 @@ class Chef:
         
         elif direction == 'up' and self.y > 32:
             self.y -= 1
+
+
+    def interact(self, time: int):
+        """
+        Perform an action
+        :param time: The time the action takes
+        """
+        self.is_acting = True
+
+        if self.is_acting:
+            # Show text
+            pyxel.text(self.x, self.y - 8, "Action", 7)
+
+
+        
     
     # ERROR HANDLING ------------------------------------------
     # properties
