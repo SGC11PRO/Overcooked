@@ -88,7 +88,7 @@ class Board:
         # Updates timer class
         self.main_timer.update(self.fps)
 
-        # Updates chef calsses
+        # Updates chef calsses (timer)
         self.chef1.update(self.fps)
         self.chef2.update(self.fps)
 
