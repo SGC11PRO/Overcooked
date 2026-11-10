@@ -11,8 +11,6 @@ class Order:
         Eggs with chorizo: 60s, 12p, -6p if lost; chopped potato + chopped chorizo + egg + pan
 
         :param order: The order: "gazpacho", "omelette" or "eggs"
-        :param x: x position
-        :param y: y position
         """
 
         self.order = order
@@ -63,10 +61,7 @@ class Order:
         """
         :param fps: frames per second
         """
-        self.frame_count += 1
-        if self.frame_count >= fps:
-            self.timer.decrease(1)
-            self.frame_count = 0
+        self.timer.update(fps)
 
         if self.timer.total_seconds == 0:
             self.lost()

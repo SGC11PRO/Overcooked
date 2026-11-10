@@ -53,7 +53,6 @@ class Chef:
         # validate parameters
         if not isinstance(direction, str):
             raise TypeError('direction must be a string')
-
         elif direction not in DIRECTIONS:
             raise ValueError('must enter a valid direction (up, down, left, right)')
         elif board.size[0] < 1 or board.size[1] < 1:
