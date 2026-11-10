@@ -18,11 +18,11 @@ class Chef:
         self.has_dish = False
         
     # CHEF BEHAVIOUR ------------------------------------------
-    def move(self, direction: str, board_size: tuple):
+    def move(self, direction: str, board):
         """
         Move the chef inside the kitchen, which starts at y=32. Collissions not implemented
         :param direction: string "up", "down", "left", "right"
-        :param board_size: tuple (x_size, y_size), to check screen limits
+        :param board: Board object to get the size of the board
         """
         # convert direction to lowercase
         direction = direction.lower()    
@@ -31,25 +31,23 @@ class Chef:
         # validate parameters
         if not isinstance(direction, str):
             raise TypeError('direction must be a string')
-        elif not isinstance(board_size, tuple) or len(board_size) != 2:
-            raise TypeError('board_size must be a tuple(x_size, y_size) with exactly 2 elements')
-        
+
         elif direction not in DIRECTIONS:
             raise ValueError('must enter a valid direction (up, down, left, right)')
-        elif board_size[0] < 1 or board_size[1] < 1:
+        elif board.size[0] < 1 or board.size[1] < 1:
             raise ValueError('board too small for the chef to move')
         
         
         # move logic
         # self.image[3] refers to horizontal image size 
         # self.image[4] refers to vertical image size
-        if direction == 'right' and self.x + self.image[3] < board_size[0]:
+        if direction == 'right' and self.x + self.image[3] < board.size[0]:
             self.x += 1
             
         elif direction == 'left' and self.x > 0:
             self.x -= 1
         
-        elif direction == 'down' and self.y + self.image[4] < board_size[1]:
+        elif direction == 'down' and self.y + self.image[4] < board.size[1]:
             self.y += 1
         
         elif direction == 'up' and self.y > 32:
