@@ -17,7 +17,7 @@ class Order:
 
         self.order = order
         # tuple (image_bank, x, y, h_size, v_size)
-        self.bg_image = (0, 16, 16, 40, 24)
+        self.bg_image = (0, 0, 80, 40, 24)
 
         # Change time, points and sprite depending on the order
         if order == "gazpacho":
