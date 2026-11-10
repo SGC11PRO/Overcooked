@@ -29,7 +29,7 @@ class Board:
         :param board_size: Tuple (width, height) for board
         """
         # board size
-        self.board_size = board_size
+        self.size = board_size
         
         # fps
         self.fps = 60
@@ -47,8 +47,8 @@ class Board:
 
         # Setup pyxel environment
         pyxel.init(
-            self.board_size[0], 
-            self.board_size[1], 
+            self.size[0], 
+            self.size[1], 
             title='Overcooked', 
             fps=self.fps, 
             quit_key=pyxel.KEY_ESCAPE, 
@@ -63,23 +63,23 @@ class Board:
         
         # Chef 1 controls (arrows)
         if pyxel.btn(chef1_right):
-            self.chef1.move('right', self.board_size)
+            self.chef1.move('right', self)
         if pyxel.btn(chef1_left):
-            self.chef1.move('left', self.board_size)
+            self.chef1.move('left', self)
         if pyxel.btn(chef1_up):
-            self.chef1.move('up', self.board_size)
+            self.chef1.move('up', self)
         if pyxel.btn(chef1_down):
-            self.chef1.move('down', self.board_size)
-            
+            self.chef1.move('down', self)
+                
         # Chef 2 controls (WASD)
         if pyxel.btn(chef2_right):
-            self.chef2.move('right', self.board_size)
+            self.chef2.move('right', self)
         if pyxel.btn(chef2_left):
-            self.chef2.move('left', self.board_size)
+            self.chef2.move('left', self)
         if pyxel.btn(chef2_up):
-            self.chef2.move('up', self.board_size)
+            self.chef2.move('up', self)
         if pyxel.btn(chef2_down):
-            self.chef2.move('down', self.board_size)
+            self.chef2.move('down', self)
 
         # Updates timer class
         self.main_timer.update(self.fps)
@@ -108,7 +108,7 @@ class Board:
         # w, h -> Width and height of the tilemap to draw 
 
         # draw tilemap for kitchen + service board
-        pyxel.bltm(0, 0, 0, 0, 0, self.board_size[0], self.board_size[1], colkey=32)
+        pyxel.bltm(0, 0, 0, 0, 0, self.size[0], self.size[1], colkey=32)
 
 
         # Objects ==========================================
@@ -121,7 +121,7 @@ class Board:
         pyxel.text(10, 18, f"Chef 2: ({self.chef2.x}, {self.chef2.y})", 7)
 
         # Draw timer inside the service board area
-        self.main_timer.draw(self.board_size[0] - 40, 10, 7)
+        self.main_timer.draw(self.size[0] - 40, 10, 7)
 
         # Draw orders inside the service board area
         if self.order_list:
