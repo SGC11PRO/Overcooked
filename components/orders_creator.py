@@ -1,53 +1,43 @@
 import random
 from components.service_board.order import Order
-from components.service_board.timer import Timer
 
 class OrderCreator:
-    """ Creates orders every certain time. Executed on board.update()"""
-    def __init__(self, main_timer: Timer):
-        """
-        :param total_time: Level time in seconds
-        """
-        # Use the game's main time (3 minutes by default)
-        self.total_time = main_timer.total_seconds
+    """ Creates orders every certain time. Executed on board.update()"""    
+    def __init__(self):
+        self.order_id = 0
+
         
     def update(self, board):
         """
         :param board: board
         """
-        self.total_time = board.main_timer.total_seconds
+        # Set time to match game time (3 minute timer)
+        self.time = board.main_timer.total_seconds
+        self.frame = board.main_timer.frame_count
+        
         # Create first order, 3 seconds since game start
-        if self.total_time == board.level_time - 3:
-            # Only if the order list is empty
-            if not board.order_list:
-                # Choose randomly between "gazpacho", "omelette" and "eggs"
-                r = random.randint(1, 3)
-                if r == 1:
-                    order = "gazpacho"
-                elif r == 2:
-                    order = "omelette"
-                else:
-                    order = "eggs"
-
-                board.order_list.append(Order(order))
-
         # Next orders are evenly spread across the time
-        # order_id variable changes evry order
-        order_id = 1
-        if self.total_time == board.level_time - order_id * board.level_time // 3:
-            # Only if the order list has less tha maximum orders (3)
-            if len(board.order_list) < 3:
-                # Choose randomly between "gazpacho", "omelette" and "eggs"
-                r = random.randint(1, 3)
-                if r == 1:
-                    order = "gazpacho"
-                elif r == 2:
-                    order = "omelette"
-                else:
-                    order = "eggs"
+        # self.order_id attribute changes every order
+        if (self.time == board.level_time - 3  - (self.order_id * board.level_time // 4)
+            and self.frame == 0):
+            # Choose randomly between "gazpacho", "omelette" and "eggs"
+            r = random.randint(1, 3)
+            if r == 1:
+                order = "gazpacho"
+            elif r == 2:
+                order = "omelette"
+            else:
+                order = "eggs"
 
-                order_id += 1
-                board.order_list.append(Order(order))
+            self.order_id += 1
+            board.order_list.append(Order(order))
+
+        for i in range(len(board.order_list)):
+            if i >= 3:
+                board.order_list[i].timer.paused = True
+            else:
+                board.order_list[i].timer.paused = False
+
 
 
 

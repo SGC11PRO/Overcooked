@@ -37,7 +37,7 @@ class Board:
         self.fps = 60
 
         # level total time in seconds
-        self.level_time = 60
+        self.level_time = 180
 
         # Create timer obj (seconds)
         self.main_timer = Timer(self.level_time) 
@@ -57,7 +57,7 @@ class Board:
             self.ingredient_list.append(ingredient)
 
         # Initialize the order creator
-        self.order_creator = OrderCreator(self.main_timer)
+        self.order_creator = OrderCreator()
 
         # Setup pyxel environment
         pyxel.init(
@@ -142,16 +142,16 @@ class Board:
         pyxel.blt(self.chef2.x, self.chef2.y, *self.chef2.image, colkey=32)
     
         # Text and UI =========================================================
-        pyxel.text(10, 8, f"Chef 1: ({self.chef1.x}, {self.chef1.y})", 7)    
-        pyxel.text(10, 18, f"Chef 2: ({self.chef2.x}, {self.chef2.y})", 7)
+        #pyxel.text(10, 8, f"Chef 1: ({self.chef1.x}, {self.chef1.y})", 7)    
+        #pyxel.text(10, 18, f"Chef 2: ({self.chef2.x}, {self.chef2.y})", 7)
 
         # Draw timer inside the service board area
         self.main_timer.draw(self.size[0] - 40, 10, 7)
 
         # Draw orders inside the service board area
-        if self.order_list:
-            for order in range(len(self.order_list)):
-                self.order_list[order].draw((order + 1) * 40, 0)
+        for order in range(len(self.order_list)):
+            if order <= 2:
+                self.order_list[order].draw((order) * 40, 0)
 
         # Draw interact actions for chefs
         self.chef1.draw()

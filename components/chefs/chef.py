@@ -91,10 +91,7 @@ class Chef:
         """
         :param fps: frames per second
         """
-        self.frame_count += 1
-        if self.frame_count >= fps:
-            self.timer.decrease(1)
-            self.frame_count = 0
+        self.timer.update(fps)
         
         if self.timer.total_seconds == 0:
             self.is_acting = False
