@@ -38,3 +38,11 @@
     - Define constants (positions, times, points, penalties, game duration...)
     - Score counter, failure counter and service timer
     - Basic data structures for recipes, waiting orders and state of each station
+
+
+# Ingerdient List:
+- tomato
+- onion
+- potato
+- egg
+- chorizo
