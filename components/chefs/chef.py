@@ -18,7 +18,7 @@ class Chef:
         self.has_dish = False
         
     # CHEF BEHAVIOUR ------------------------------------------
-    def move(self, direction: str, board: "Board"):
+    def move(self, direction: str, board):
         """
         Move the chef inside the kitchen, which starts at y=32. Collissions not implemented
         :param direction: string "up", "down", "left", "right"
