@@ -15,10 +15,21 @@ class Chef:
         
         self.x = x
         self.y = y
+
+        self.img_x = img_x
+        self.img_y = img_y
         
         # tuple (image_bank, x, y, h_size, v_size)
-        self.image = (0, img_x, img_y, 16, 16)
+        self.__image = (0, img_x, img_y, 16, 16)
         self.has_dish = False
+
+        # Sprites (only the x position of each image) for each state of the chef: 
+        # [0] -> down
+        # [1] -> up
+        # [2] -> right
+        # [3] -> left
+
+        self.state_sprites = (0, 16, 32, 48)
 
         # Acting check
         self.is_acting = False
@@ -54,15 +65,19 @@ class Chef:
         # self.image[4] refers to vertical image size
         if direction == 'right' and self.x + self.image[3] < board.size[0]:
             self.x += 1
+            self.__image = (0, self.state_sprites[2], self.img_y, 16, 16)
             
         elif direction == 'left' and self.x > 0:
             self.x -= 1
-        
+            self.__image = (0, self.state_sprites[3], self.img_y, 16, 16)
+
         elif direction == 'down' and self.y + self.image[4] < board.size[1]:
             self.y += 1
-        
+            self.__image = (0, self.state_sprites[0], self.img_y, 16, 16)
+
         elif direction == 'up' and self.y > 32:
             self.y -= 1
+            self.__image = (0, self.state_sprites[1], self.img_y, 16, 16)
 
 
     def interact(self, time: int):
@@ -129,15 +144,6 @@ class Chef:
             raise ValueError('y position must be positive')
         else:
             self.__y = y
-    
-    @image.setter
-    def image(self, image: tuple):
-        if not isinstance(image, tuple):
-            raise TypeError('image must be a tuple')
-        elif len(image) != 5:
-            raise ValueError('image require 5 parameters')
-        else:
-            self.__image = image
             
     @has_dish.setter
     def has_dish(self, has_dish: bool):
