@@ -5,6 +5,7 @@ from components.chefs.chef import Chef
 from components.floor import Floor
 from components.service_board.timer import Timer
 from components.service_board.order import Order
+from components.ingredient import Ingredient
 
 # Input mapping
 chef1_right = pyxel.KEY_RIGHT
@@ -44,6 +45,13 @@ class Board:
         # Create chef objs
         self.chef1 = Chef(50, 50, 0, 16)
         self.chef2 = Chef(50, 120, 0, 32)
+
+        # Create ingredients list
+        self.ingredient_list = []
+        NAMES = ("tomato", "onion", "potato", "egg", "chorizo")
+        for name in NAMES:
+            ingredient = Ingredient(name)
+            self.ingredient_list.append(ingredient)
 
         # Setup pyxel environment
         pyxel.init(
