@@ -41,9 +41,6 @@ class Order:
         self.timer = Timer(self.time)
         self.score = score
 
-        # Availability (Not available if time is over)
-        self.available = True
-
     def draw(self, x: int, y: int):
         if not isinstance(x, int):
             raise TypeError('x position must be an int')
