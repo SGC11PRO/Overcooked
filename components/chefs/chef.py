@@ -53,7 +53,6 @@ class Chef:
         # validate parameters
         if not isinstance(direction, str):
             raise TypeError('direction must be a string')
-
         elif direction not in DIRECTIONS:
             raise ValueError('must enter a valid direction (up, down, left, right)')
         elif board.size[0] < 1 or board.size[1] < 1:
@@ -92,10 +91,7 @@ class Chef:
         """
         :param fps: frames per second
         """
-        self.frame_count += 1
-        if self.frame_count >= fps:
-            self.timer.decrease(1)
-            self.frame_count = 0
+        self.timer.update(fps)
         
         if self.timer.total_seconds == 0:
             self.is_acting = False

@@ -9,16 +9,33 @@ class Timer:
         """
         self.total_seconds = total_seconds
         self.frame_count = 0
+
+        self.paused = False
         
 
     def decrease(self, s: int):
         """ Decrese s seconds
         :param s: seconds to decrease
         """
+              
         if self.total_seconds >= s:
             self.total_seconds -= s
         else:
             self.total_seconds = 0
+
+    def update(self, fps: int):
+        """
+        :param fps: frames per second
+        """
+        
+        self.m = self.total_seconds // 60
+        self.s = self.total_seconds % 60
+
+        if not self.paused: 
+            self.frame_count += 1
+            if self.frame_count >= fps:
+                self.decrease(1)
+                self.frame_count = 0
 
     def draw(self, x: int, y: int, col: int):
         """
@@ -36,19 +53,9 @@ class Timer:
         elif y < 0:
             raise ValueError("y position must be positive")
 
-        self.m = self.total_seconds // 60
-        self.s = self.total_seconds % 60
         
         pyxel.text(x, y, f"{self.m}:{self.s:02}", col)
     
-    def update(self, fps: int):
-        """
-        :param fps: frames per second
-        """
-        self.frame_count += 1
-        if self.frame_count >= fps:
-            self.decrease(1)
-            self.frame_count = 0
 
 
 

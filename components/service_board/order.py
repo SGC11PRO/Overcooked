@@ -11,8 +11,6 @@ class Order:
         Eggs with chorizo: 60s, 12p, -6p if lost; chopped potato + chopped chorizo + egg + pan
 
         :param order: The order: "gazpacho", "omelette" or "eggs"
-        :param x: x position
-        :param y: y position
         """
 
         self.order = order
@@ -21,7 +19,7 @@ class Order:
 
         # Change time, points and sprite depending on the order
         if order == "gazpacho":
-            self.time = 45
+            self.time = 48
             self.points_if_ok = 10
             self.points_if_lost = -5
             self.image = (0, 32, 0, 16, 16)
@@ -34,11 +32,10 @@ class Order:
             self.time = 60
             self.points_if_ok = 12
             self.points_if_lost = -6
-            self.image = (0, 32, 0, 16, 16)
+            self.image = (0, 48, 0, 16, 16)
 
         # Add a timer
         self.timer = Timer(self.time)
-        self.frame_count = 0
 
         # Availability (Not available if time is over)
         self.available = True
@@ -63,10 +60,7 @@ class Order:
         """
         :param fps: frames per second
         """
-        self.frame_count += 1
-        if self.frame_count >= fps:
-            self.timer.decrease(1)
-            self.frame_count = 0
+        self.timer.update(fps)
 
         if self.timer.total_seconds == 0:
             self.lost()

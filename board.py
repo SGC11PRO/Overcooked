@@ -6,6 +6,7 @@ from components.floor import Floor
 from components.service_board.timer import Timer
 from components.service_board.order import Order
 from components.ingredient import Ingredient
+from components.orders_creator import OrderCreator
 
 # Input mapping
 chef1_right = pyxel.KEY_RIGHT
@@ -35,12 +36,14 @@ class Board:
         # fps
         self.fps = 60
 
+        # level total time in seconds
+        self.level_time = 180
+
         # Create timer obj (seconds)
-        self.main_timer = Timer(180) 
+        self.main_timer = Timer(self.level_time) 
 
         # Create test orders
         self.order_list = []
-        self.order_list.append(Order("gazpacho"))
         
         # Create chef objs
         self.chef1 = Chef(50, 50, 0, 16)
@@ -52,6 +55,9 @@ class Board:
         for name in NAMES:
             ingredient = Ingredient(name)
             self.ingredient_list.append(ingredient)
+
+        # Initialize the order creator
+        self.order_creator = OrderCreator()
 
         # Setup pyxel environment
         pyxel.init(
@@ -78,7 +84,7 @@ class Board:
             self.chef1.move('up', self)
         if pyxel.btn(chef1_down):
             self.chef1.move('down', self)
-        if pyxel.btn(chef1_interact):
+        if pyxel.btnp(chef1_interact):
             self.chef1.interact(5)    
                 
         # Chef 2 controls (WASD)
@@ -99,6 +105,9 @@ class Board:
         # Updates chef calsses (timer)
         self.chef1.update(self.fps)
         self.chef2.update(self.fps)
+
+        # Create orders
+        self.order_creator.update(self)
 
         # Updates order class (Iterating through a shallow copy)
         for order in self.order_list[:]:
@@ -133,15 +142,16 @@ class Board:
         pyxel.blt(self.chef2.x, self.chef2.y, *self.chef2.image, colkey=32)
     
         # Text and UI =========================================================
-        pyxel.text(10, 8, f"Chef 1: ({self.chef1.x}, {self.chef1.y})", 7)    
-        pyxel.text(10, 18, f"Chef 2: ({self.chef2.x}, {self.chef2.y})", 7)
+        #pyxel.text(10, 8, f"Chef 1: ({self.chef1.x}, {self.chef1.y})", 7)    
+        #pyxel.text(10, 18, f"Chef 2: ({self.chef2.x}, {self.chef2.y})", 7)
 
         # Draw timer inside the service board area
         self.main_timer.draw(self.size[0] - 40, 10, 7)
 
         # Draw orders inside the service board area
-        if self.order_list:
-            self.order_list[0].draw(80, 0)
+        for order in range(len(self.order_list)):
+            if order <= 2:
+                self.order_list[order].draw((order) * 40, 0)
 
         # Draw interact actions for chefs
         self.chef1.draw()
