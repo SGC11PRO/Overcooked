@@ -78,8 +78,8 @@ class Chef:
             self.y -= 1
             self.__image = (0, self.state_sprites[1], self.img_y, 16, 16)
 
-
-    def interact(self, time: int):
+    # if time is not specified, it will be 1 second by default
+    def interact(self, time: int | int = 1):
         """
         Perform an action
         :param time: The time the action takes
@@ -102,7 +102,7 @@ class Chef:
 
         if self.is_acting:
             # Show text
-            pyxel.text(self.x, self.y - 8, "Action", 32)
+            pyxel.text(self.x + self.image[3] // 2, self.y - 8, "!", 32)
 
         
     

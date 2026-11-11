@@ -103,7 +103,7 @@ class Board:
         if pyxel.btn(chef1_down):
             self.chef1.move('down', self)
         if pyxel.btnp(chef1_interact):
-            self.chef1.interact(1)
+            self.chef1.interact()
             self.complete_oldest_order() # Debugging only
             
             # self.score.add_score(10) 
@@ -118,12 +118,12 @@ class Board:
         if pyxel.btn(chef2_down):
             self.chef2.move('down', self)
         if pyxel.btn(chef2_interact):
-            self.chef2.interact(1)
+            self.chef2.interact()
 
         # Updates timer class
         self.main_timer.update(self.fps)
 
-        # Updates chef calsses (timer)
+        # Updates chef timers (for actions)
         self.chef1.update(self.fps)
         self.chef2.update(self.fps)
 
