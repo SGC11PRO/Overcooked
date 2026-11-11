@@ -31,7 +31,7 @@ class Order:
             self.points_if_ok = 12
             self.points_if_lost = -6
             self.image = (0, 16, 0, 16, 16)
-        else:
+        elif order == "eggs":
             self.time = 60
             self.points_if_ok = 12
             self.points_if_lost = -6
