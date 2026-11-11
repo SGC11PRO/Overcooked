@@ -79,7 +79,7 @@ class Chef:
             self.__image = (1, self.state_sprites[3], self.img_y, 14, 28)
 
     # if time is not specified, it will be 1 second by default
-    def interact(self, time: int | int = 1):
+    def interact(self, time: int = 1):
         """
         Perform an action
         :param time: The time the action takes

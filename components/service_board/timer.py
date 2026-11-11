@@ -12,8 +12,7 @@ class Timer:
 
         self.paused = False
         
-    # solo se usa en esta clase no?
-    def __decrease(self, s: int):
+    def __decrease(self, s: int = 1):
         """ Decrese s seconds
         :param s: seconds to decrease
         """
@@ -34,7 +33,7 @@ class Timer:
         if not self.paused: 
             self.frame_count += 1
             if self.frame_count >= fps:
-                self.__decrease(1)
+                self.__decrease()
                 self.frame_count = 0
 
     def draw(self, x: int, y: int, col: int):
