@@ -158,13 +158,13 @@ class Board:
 
 
         # Objects ==========================================
-        # Draw chefs (colkey=32 to set transparency)
-        pyxel.blt(self.chef1.x, self.chef1.y, *self.chef1.image, colkey=32)
-        pyxel.blt(self.chef2.x, self.chef2.y, *self.chef2.image, colkey=32)
+        # Draw chefs
+        self.chef1.draw()
+        self.chef2.draw()
     
         # Text and UI =========================================================
-        #pyxel.text(10, 8, f"Chef 1: ({self.chef1.x}, {self.chef1.y})", 7)    
-        #pyxel.text(10, 18, f"Chef 2: ({self.chef2.x}, {self.chef2.y})", 7)
+        # pyxel.text(10, 8, f"Chef 1: ({self.chef1.x}, {self.chef1.y})", 7)    
+        # pyxel.text(10, 18, f"Chef 2: ({self.chef2.x}, {self.chef2.y})", 7)
 
         # Draw timer inside the service board area
         self.main_timer.draw(self.size[0] - 40, 10, 7)

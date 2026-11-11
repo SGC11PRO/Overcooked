@@ -98,6 +98,8 @@ class Chef:
             self.is_acting = False
 
     def draw(self):
+        pyxel.blt(self.x, self.y, *self.image, colkey=32)
+
         if self.is_acting:
             # Show text
             pyxel.text(self.x, self.y - 8, "Action", 32)
