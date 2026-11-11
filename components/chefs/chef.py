@@ -102,7 +102,7 @@ class Chef:
 
         if self.is_acting:
             # Show text
-            pyxel.text(self.x + self.image[3] // 2, self.y - 8, "!", 32)
+            pyxel.text(self.x + self.image[3] // 2 - 2, self.y - 8, "!", 32)
 
         
     
