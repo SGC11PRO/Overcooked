@@ -45,8 +45,8 @@ class Board:
         self.order_creator = OrderCreator()
         
         # Chefs
-        self.chef1 = Chef(50, 50, 0, 16)
-        self.chef2 = Chef(50, 120, 0, 32)
+        self.chef1 = Chef(50, 80, 0, 0)
+        self.chef2 = Chef(50, 120, 0, 32    )
 
         # Ingredients
         self.ingredient_list = []

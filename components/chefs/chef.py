@@ -21,7 +21,7 @@ class Chef:
         
         
         # tuple (image_bank, x, y, h_size, v_size)
-        self.__image = (0, img_x, img_y, 16, 16)
+        self.__image = (1, img_x, img_y, 14, 28)
         self.has_dish = False
 
         # Sprites (only the y position of each image) for each state of the chef: 
@@ -64,19 +64,19 @@ class Chef:
         # self.image[4] refers to vertical image size
         if direction == 'right' and self.x + self.image[3] < board.size[0]:
             self.x += 1
-            self.__image = (0, self.state_sprites[2], self.img_y, 16, 16)
+            self.__image = (1, self.state_sprites[2], self.img_y, 14, 28)
             
         elif direction == 'left' and self.x > 0:
             self.x -= 1
-            self.__image = (0, self.state_sprites[3], self.img_y, 16, 16)
+            self.__image = (1, self.state_sprites[1], self.img_y, 14, 28)
 
         elif direction == 'down' and self.y + self.image[4] < board.size[1]:
             self.y += 1
-            self.__image = (0, self.state_sprites[0], self.img_y, 16, 16)
+            self.__image = (1, self.state_sprites[0], self.img_y, 14, 28)
 
         elif direction == 'up' and self.y > 32:
             self.y -= 1
-            self.__image = (0, self.state_sprites[1], self.img_y, 16, 16)
+            self.__image = (1, self.state_sprites[3], self.img_y, 14, 28)
 
     # if time is not specified, it will be 1 second by default
     def interact(self, time: int | int = 1):
