@@ -3,7 +3,7 @@ from .timer import Timer
 
 class Order:
     """ Order ... """
-    def __init__(self, order: str):
+    def __init__(self, order: str, score, order_id: int):
         """
         Possible orders:
         Gazpacho: 45 seconds, 10 points, -5 if lost; chopped tomato + chopped onion + blender
@@ -12,9 +12,12 @@ class Order:
 
         :param order: The order: "gazpacho", "omelette" or "eggs"
         """
-
+        
+        self.id = order_id
+        self.score = score
+        self.available = True
+        
         self.order = order
-        # tuple (image_bank, x, y, h_size, v_size)
         self.bg_image = (0, 0, 80, 40, 24)
 
         # Change time, points and sprite depending on the order
@@ -34,8 +37,9 @@ class Order:
             self.points_if_lost = -6
             self.image = (0, 48, 0, 16, 16)
 
-        # Add a timer
+        # Add a timer and score manager
         self.timer = Timer(self.time)
+        self.score = score
 
         # Availability (Not available if time is over)
         self.available = True
@@ -67,7 +71,27 @@ class Order:
     
 
     def lost(self):
+        """
+        Called when the order is lost (time is over). It reduces the score and sets the order as unavailable.
+        """
+        # If the order is already unavailable, do nothing (return and finish)
+        if not self.available:
+            return
+        
         self.available = False
+        self.score.add_score(self.points_if_lost)
+        
+    def complete(self):
+        """
+        Called when the order is completed. It increases the score and sets the order as unavailable.
+        """
+        # same
+        if not self.available:
+            return
+        
+        self.available = False
+        self.score.add_score(self.points_if_ok)
+        
             
 
         

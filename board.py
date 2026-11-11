@@ -5,6 +5,7 @@ from components.chefs.chef import Chef
 from components.floor import Floor
 from components.service_board.timer import Timer
 from components.service_board.order import Order
+from components.service_board.score import Score
 from components.ingredient import Ingredient
 from components.orders_creator import OrderCreator
 
@@ -30,34 +31,30 @@ class Board:
         Documentation...
         :param board_size: Tuple (width, height) for board
         """
-        # board size
         self.size = board_size
-        
-        # fps
+
+        # Time and score
         self.fps = 60
-
-        # level total time in seconds
         self.level_time = 180
-
-        # Create timer obj (seconds)
         self.main_timer = Timer(self.level_time) 
-
-        # Create test orders
-        self.order_list = []
         
-        # Create chef objs
+        self.score = Score()
+
+        # Orders
+        self.order_list = []
+        self.order_creator = OrderCreator()
+        
+        # Chefs
         self.chef1 = Chef(50, 50, 0, 16)
         self.chef2 = Chef(50, 120, 0, 32)
 
-        # Create ingredients list
+        # Ingredients
         self.ingredient_list = []
         NAMES = ("tomato", "onion", "potato", "egg", "chorizo")
         for name in NAMES:
             ingredient = Ingredient(name)
             self.ingredient_list.append(ingredient)
 
-        # Initialize the order creator
-        self.order_creator = OrderCreator()
 
         # Setup pyxel environment
         pyxel.init(
@@ -71,6 +68,27 @@ class Board:
         pyxel.load('assets/overcooked.pyxres')
         pyxel.run(self.update, self.draw)
 
+ 
+    # COMPLETE ORDERS
+    # To complete an order just call board.complete_order(order_id) and it will search for the order with that id and complete it. 
+    # If the order is not found, it will return False.
+    def complete_order(self, order_id: int) -> bool:
+        for order in self.order_list:
+            if order.id == order_id:
+                order.complete()
+                return True
+            
+        return False
+    
+    
+    # Debugging only (to complete oldes order)
+    def complete_oldest_order(self) ->  bool:
+        for order in self.order_list:
+            if order.available:
+                return self.complete_order(order.id)
+        
+        return False
+    
     # BOARD LOGIC ------------------------------------------
     def update(self):
         """Executed in every frame."""
@@ -85,7 +103,10 @@ class Board:
         if pyxel.btn(chef1_down):
             self.chef1.move('down', self)
         if pyxel.btnp(chef1_interact):
-            self.chef1.interact(5)    
+            self.chef1.interact(1)
+            self.complete_oldest_order() # Debugging only
+            
+            # self.score.add_score(10) 
                 
         # Chef 2 controls (WASD)
         if pyxel.btn(chef2_right):
@@ -97,7 +118,7 @@ class Board:
         if pyxel.btn(chef2_down):
             self.chef2.move('down', self)
         if pyxel.btn(chef2_interact):
-            self.chef2.interact(5)
+            self.chef2.interact(1)
 
         # Updates timer class
         self.main_timer.update(self.fps)
@@ -116,7 +137,7 @@ class Board:
             # Deletes unavailable orders (done or time's over)
             if not order.available:
                 self.order_list.remove(order)
-        
+                    
             
     def draw(self):
         """Executed in every frame. Logic to draw sprites on the screen"""
@@ -147,13 +168,16 @@ class Board:
 
         # Draw timer inside the service board area
         self.main_timer.draw(self.size[0] - 40, 10, 7)
+        
+        # Draw score inside the service board area
+        pyxel.text(self.size[0] - 40, 20, str(self.score.score), 7)
 
         # Draw orders inside the service board area
         for order in range(len(self.order_list)):
             if order <= 2:
                 self.order_list[order].draw((order) * 40, 0)
 
-        # Draw interact actions for chefs
+        # Draw  chefs
         self.chef1.draw()
         self.chef2.draw()
 
