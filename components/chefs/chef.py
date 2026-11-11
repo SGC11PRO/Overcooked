@@ -34,8 +34,7 @@ class Chef:
         # Acting check
         self.is_acting = False
 
-        # Timer and frame counter
-        self.frame_count = 0
+        # Timer
         self.timer = Timer(0)
         
         
@@ -85,6 +84,7 @@ class Chef:
         :param time: The time the action takes
         """
         self.is_acting = True
+        self.timer.frame_count = 0
         self.timer.total_seconds = time
 
     def update(self, fps: int):
