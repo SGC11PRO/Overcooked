@@ -19,6 +19,7 @@ class Chef:
         self.img_x = img_x
         self.img_y = img_y
         
+        
         # tuple (image_bank, x, y, h_size, v_size)
         self.__image = (0, img_x, img_y, 16, 16)
         self.has_dish = False
@@ -86,7 +87,7 @@ class Chef:
         """
         self.is_acting = True
         self.timer.total_seconds = time
-
+        
     def update(self, fps: int):
         """
         :param fps: frames per second
