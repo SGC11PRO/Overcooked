@@ -72,7 +72,7 @@ class Chef:
             if board.main_timer.frame_count % self.animation_speed < self.animation_speed / 2:
                 self.__image = (1, self.state_sprites[1], self.img_y, -14, 28)
             else:
-                self.__image = (1, self.state_sprites[2], self.img_y, 14, 28)
+                self.__image = (1, self.state_sprites[2], self.img_y, -14, 28)
             
         elif direction == 'left' and self.x > 0:
             self.x -= 1
