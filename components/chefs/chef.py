@@ -66,7 +66,7 @@ class Chef:
         # move logic
         # self.image[3] refers to horizontal image size 
         # self.image[4] refers to vertical image size
-        if direction == 'right' and self.x + self.image[3] < board.size[0]:
+        if direction == 'right' and self.x + abs(self.image[3]) < board.size[0]:
             self.x += 1
             # Walking animation
             if board.main_timer.frame_count % self.animation_speed < self.animation_speed / 2:
