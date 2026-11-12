@@ -26,12 +26,16 @@ class Chef:
 
         # Sprites (only the y position of each image) for each state of the chef: 
         # [0] -> down
-        # [1] -> up
-        # [2] -> right
-        # [3] -> left
+        # [1] -> left / right
+        # [2] -> walking
+        # [3] -> up
 
         self.state_sprites = (0, 16, 32, 48)
 
+        # Animation speed
+        # At 60 fps, animation_speed = 60 means 2 sprite changes per second
+        # At 60 fps, animation_speed = 30 means 4 sprite changes per second (faster)
+        self.animation_speed = 30
         # Acting check
         self.is_acting = False
 
@@ -64,11 +68,19 @@ class Chef:
         # self.image[4] refers to vertical image size
         if direction == 'right' and self.x + self.image[3] < board.size[0]:
             self.x += 1
-            self.__image = (1, self.state_sprites[2], self.img_y, 14, 28)
+            # Walking animation
+            if board.main_timer.frame_count % self.animation_speed < self.animation_speed / 2:
+                self.__image = (1, self.state_sprites[1], self.img_y, -14, 28)
+            else:
+                self.__image = (1, self.state_sprites[2], self.img_y, 14, 28)
             
         elif direction == 'left' and self.x > 0:
             self.x -= 1
-            self.__image = (1, self.state_sprites[1], self.img_y, 14, 28)
+            # Walking animation
+            if board.main_timer.frame_count % self.animation_speed < self.animation_speed / 2:
+                self.__image = (1, self.state_sprites[1], self.img_y, 14, 28)
+            else:
+                self.__image = (1, self.state_sprites[2], self.img_y, 14, 28)
 
         elif direction == 'down' and self.y + self.image[4] < board.size[1]:
             self.y += 1

@@ -94,14 +94,14 @@ class Board:
         """Executed in every frame."""
         
         # Chef 1 controls (arrows)
-        if pyxel.btn(chef1_right):
-            self.chef1.move('right', self)
-        if pyxel.btn(chef1_left):
-            self.chef1.move('left', self)
         if pyxel.btn(chef1_up):
             self.chef1.move('up', self)
         if pyxel.btn(chef1_down):
             self.chef1.move('down', self)
+        if pyxel.btn(chef1_right):
+            self.chef1.move('right', self)
+        if pyxel.btn(chef1_left):
+            self.chef1.move('left', self)
         if pyxel.btnp(chef1_interact):
             self.chef1.interact()
             self.complete_oldest_order() # Debugging only
@@ -109,14 +109,14 @@ class Board:
             # self.score.add_score(10) 
                 
         # Chef 2 controls (WASD)
-        if pyxel.btn(chef2_right):
-            self.chef2.move('right', self)
-        if pyxel.btn(chef2_left):
-            self.chef2.move('left', self)
         if pyxel.btn(chef2_up):
             self.chef2.move('up', self)
         if pyxel.btn(chef2_down):
             self.chef2.move('down', self)
+        if pyxel.btn(chef2_right):
+            self.chef2.move('right', self)
+        if pyxel.btn(chef2_left):
+            self.chef2.move('left', self)
         if pyxel.btn(chef2_interact):
             self.chef2.interact()
 
