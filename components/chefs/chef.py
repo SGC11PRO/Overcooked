@@ -17,17 +17,8 @@ class Chef:
         self.id = id
         self.board = board
 
-        # tuple (image_bank, x, y, h_size, v_size)
-        # self.__image = (1, img_x, img_y, 14, 28)
         self.has_dish = False
 
-        # Sprites (only the y position of each image) for each state of the chef: 
-        # [0] -> down
-        # [1] -> left / right
-        # [2] -> walking
-        # [3] -> up
-
-        # self.state_sprites = (0, 16, 32, 48)
         self.__sprites = {
             # Every chef must be in a different row
             # Chef 1 in Row 0, Chef 2 in Row 32 ...
@@ -40,6 +31,7 @@ class Chef:
             "right_walk": (1, 16, id * 32, -14, 28),
             "up": (1, 48, id * 32, 14, 28),
         }
+        # Initial sprite
         self.__image = self.__sprites["down"]
 
         # Input mapping
@@ -65,6 +57,7 @@ class Chef:
         # At 60 fps, animation_speed = 60 means 2 sprite changes per second
         # At 60 fps, animation_speed = 30 means 4 sprite changes per second (faster)
         self.animation_speed = 30
+        
         # Acting check
         self.is_acting = False
 
