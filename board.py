@@ -2,26 +2,10 @@ import pyxel
 
 # Initial objects on the board
 from components.chefs.chef import Chef
-from components.floor import Floor
 from components.service_board.timer import Timer
-from components.service_board.order import Order
 from components.service_board.score import Score
 from components.ingredient import Ingredient
 from components.orders_creator import OrderCreator
-
-# Input mapping
-chef1_right = pyxel.KEY_RIGHT
-chef1_left = pyxel.KEY_LEFT
-chef1_up = pyxel.KEY_UP
-chef1_down = pyxel.KEY_DOWN
-chef1_interact = pyxel.KEY_RSHIFT
-
-chef2_right = pyxel.KEY_D
-chef2_left = pyxel.KEY_A
-chef2_up = pyxel.KEY_W
-chef2_down = pyxel.KEY_S
-chef2_interact = pyxel.KEY_LSHIFT
-
 
 class Board:
     """Documentation..."""
@@ -45,8 +29,8 @@ class Board:
         self.order_creator = OrderCreator()
         
         # Chefs
-        self.chef1 = Chef(50, 80, 0, 0)
-        self.chef2 = Chef(50, 120, 0, 32    )
+        self.chef1 = Chef(50, 80, 0, self)
+        self.chef2 = Chef(50, 120, 1, self)
 
         # Ingredients
         self.ingredient_list = []
@@ -92,40 +76,13 @@ class Board:
     # BOARD LOGIC ------------------------------------------
     def update(self):
         """Executed in every frame."""
-        
-        # Chef 1 controls (arrows)
-        if pyxel.btn(chef1_up):
-            self.chef1.move('up', self)
-        if pyxel.btn(chef1_down):
-            self.chef1.move('down', self)
-        if pyxel.btn(chef1_right):
-            self.chef1.move('right', self)
-        if pyxel.btn(chef1_left):
-            self.chef1.move('left', self)
-        if pyxel.btnp(chef1_interact):
-            self.chef1.interact()
-            self.complete_oldest_order() # Debugging only
-            
-            # self.score.add_score(10) 
-                
-        # Chef 2 controls (WASD)
-        if pyxel.btn(chef2_up):
-            self.chef2.move('up', self)
-        if pyxel.btn(chef2_down):
-            self.chef2.move('down', self)
-        if pyxel.btn(chef2_right):
-            self.chef2.move('right', self)
-        if pyxel.btn(chef2_left):
-            self.chef2.move('left', self)
-        if pyxel.btn(chef2_interact):
-            self.chef2.interact()
 
         # Updates timer class
         self.main_timer.update(self.fps)
 
-        # Updates chef timers (for actions)
-        self.chef1.update(self.fps)
-        self.chef2.update(self.fps)
+        # Updates chefs
+        self.chef1.update()
+        self.chef2.update()
 
         # Create orders
         self.order_creator.update(self)
