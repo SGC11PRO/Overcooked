@@ -146,6 +146,7 @@ class Chef:
         if self.interaction_timer.total_seconds == 0:
             self.is_acting = False
 
+        """
         # Input detection
         if pyxel.btn(self.__inputs["up"]):
             self.move('up')
@@ -162,6 +163,28 @@ class Chef:
         if pyxel.btnp(self.__inputs["interact"]):
             self.interact()
             self.board.complete_oldest_order() # Debugging only
+        """
+        
+        # Input detection in a more efficient way
+        # When moving diagonally, the chef will move in the left-or-right direction, but not in the up-or-down direction
+        if pyxel.btn(self.__inputs["up"]) and not (pyxel.btn(self.__inputs["down"]) or pyxel.btn(self.__inputs["left"]) or pyxel.btn(self.__inputs["right"])):
+            self.move('up')
+        elif pyxel.btn(self.__inputs["down"]) and not (pyxel.btn(self.__inputs["up"]) or pyxel.btn(self.__inputs["left"]) or pyxel.btn(self.__inputs["right"])):
+            self.move('down')
+        elif pyxel.btn(self.__inputs["right"]) and not pyxel.btn(self.__inputs["left"]):
+            self.move('right')
+        elif pyxel.btn(self.__inputs["left"]) and not pyxel.btn(self.__inputs["right"]):
+            self.move('left')
+        else:
+            # this gets executed when opposite keys are pressed or no key is pressed
+            self.stop('down')
+            
+        # interact
+        if pyxel.btnp(self.__inputs["interact"]):
+            self.interact()
+            self.board.complete_oldest_order() # Debugging only
+            
+        
 
     def draw(self):
         pyxel.blt(self.x, self.y, *self.image, 32)
