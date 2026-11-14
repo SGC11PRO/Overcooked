@@ -4,6 +4,7 @@ import pyxel
 from components.chefs.chef import Chef
 from components.service_board.timer import Timer
 from components.service_board.score import Score
+from components.floor import Floor
 from components.ingredient import Ingredient
 from components.orders_creator import OrderCreator
 
@@ -39,6 +40,7 @@ class Board:
             ingredient = Ingredient(name)
             self.ingredient_list.append(ingredient)
 
+        self.floor = Floor()
 
         # Setup pyxel environment
         pyxel.init(
@@ -111,7 +113,8 @@ class Board:
         # w, h -> Width and height of the tilemap to draw 
 
         # draw tilemap for kitchen + service board
-        pyxel.bltm(0, 0, 0, 0, 0, self.size[0], self.size[1], colkey=32)
+        # pyxel.bltm(0, 0, 0, 0, 0, self.size[0], self.size[1], colkey=32)
+        self.floor.draw()
 
 
         # Objects ==========================================

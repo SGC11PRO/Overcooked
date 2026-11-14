@@ -1,4 +1,4 @@
-import random
+import pyxel
 from components.service_board.order import Order
 
 class OrderCreator:
@@ -21,7 +21,7 @@ class OrderCreator:
         if (self.time == board.level_time - 3  - (self.order_id * board.level_time // 4)
             and self.frame == 0):
             # Choose randomly between "gazpacho", "omelette" and "eggs"
-            r = random.randint(1, 3)
+            r = pyxel.rndi(1, 3)
             if r == 1:
                 order = "gazpacho"
             elif r == 2:
