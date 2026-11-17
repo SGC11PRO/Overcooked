@@ -109,13 +109,15 @@ class Chef:
             else:
                 self.__image = self.__sprites["left_walk"]
 
-        elif direction == 'down' and self.y + self.__sprites["down"][4] < self.__bottom_limit:
-            self.y += 1
+        elif direction == 'down':
             self.__image = self.__sprites["down"]
+            if self.y + self.__sprites["down"][4] < self.__bottom_limit:
+                self.y += 1
 
-        elif direction == 'up' and self.y > self.__top_limit:
-            self.y -= 1
+        elif direction == 'up':
             self.__image = self.__sprites["up"]
+            if self.y > self.__top_limit:
+                self.y -= 1
 
     def stop(self, direction: str):
         """
