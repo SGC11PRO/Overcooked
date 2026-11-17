@@ -4,6 +4,7 @@ import pyxel
 from components.chefs.chef import Chef
 from components.service_board.timer import Timer
 from components.service_board.score import Score
+from components.floor import Floor
 from components.ingredient import Ingredient
 from components.orders_creator import OrderCreator
 
@@ -29,7 +30,7 @@ class Board:
         self.order_creator = OrderCreator()
         
         # Chefs
-        self.chef1 = Chef(50, 80, 0, self)
+        self.chef1 = Chef(50, 40, 0, self)
         self.chef2 = Chef(50, 120, 1, self)
 
         # Ingredients
@@ -39,6 +40,7 @@ class Board:
             ingredient = Ingredient(name)
             self.ingredient_list.append(ingredient)
 
+        self.floor = Floor()
 
         # Setup pyxel environment
         pyxel.init(
@@ -111,14 +113,26 @@ class Board:
         # w, h -> Width and height of the tilemap to draw 
 
         # draw tilemap for kitchen + service board
-        pyxel.bltm(0, 0, 0, 0, 0, self.size[0], self.size[1], colkey=32)
+        # pyxel.bltm(0, 0, 0, 0, 0, self.size[0], self.size[1], colkey=32)
 
 
         # Objects ==========================================
         # Draw chefs
+        self.floor.draw(0)
+        self.floor.draw(1)
+        self.floor.draw(2)
+        self.floor.draw(3)
+
         self.chef1.draw()
+        self.floor.draw(4)
+        self.floor.draw(5)
+        self.floor.draw(6)
+        self.floor.draw(7)
+
         self.chef2.draw()
-    
+        self.floor.draw(8)
+
+        
         # Text and UI =========================================================
         # pyxel.text(10, 8, f"Chef 1: ({self.chef1.x}, {self.chef1.y})", 7)    
         # pyxel.text(10, 18, f"Chef 2: ({self.chef2.x}, {self.chef2.y})", 7)
@@ -134,9 +148,6 @@ class Board:
             if order <= 2:
                 self.order_list[order].draw((order) * 40, 0)
 
-        # Draw  chefs
-        self.chef1.draw()
-        self.chef2.draw()
 
     # ERROR HANDLING ---------------------------------------
     @property
