@@ -11,11 +11,13 @@ class Floor:
         # "brd": Board, "ble": Blender, "pan": Pan, "plt": Plates, "srv": Serve
         # "pss": Pass, "bin": Bin, "snk": Sink, "rtn": Return
         # "fre": Free, "wal": Wall
-        self.LAYOUT = (("oni", "egg", "cho", "fre", "brd", "fre", "ble", "fre", "fre", "fre", "fre", "srv"),
-                  (12 * ("",)), (12 * ("",)), (12 * ("",)),
-                  ("wal", "pss", "wal", "pss", "wal", "bin", "wal", "pss", "wal", "snk", "pss", "wal"),
-                  (12 * ("",)), (12 * ("",)), (12 * ("",)),
-                  ("tom", "pot", "fre", "fre", "fre", "brd", "fre", "pan", "rtn", "plt", "fre", "fre"))
+        self.LAYOUT = (
+            ("oni", "egg", "cho", "fre", "brd", "fre", "ble", "fre", "fre", "fre", "fre", "srv"),
+            (12 * ("",)), (12 * ("",)), (12 * ("",)),
+            ("wal", "pss", "wal", "pss", "wal", "bin", "wal", "pss", "wal", "snk", "pss", "wal"),
+            (12 * ("",)), (12 * ("",)), (12 * ("",)),
+            ("tom", "pot", "fre", "fre", "fre", "brd", "fre", "pan", "rtn", "plt", "fre", "fre")
+        )
 
     def draw(self, row):
         for station in range(len(self.LAYOUT[row])):
