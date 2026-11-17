@@ -43,6 +43,10 @@ class Chef:
                 "down": pyxel.KEY_DOWN,
                 "interact": pyxel.KEY_RSHIFT
             }
+
+            self.__top_limit = 32
+            self.__bottom_limit = 100
+
         elif self.id == 1:
             self.__inputs = {
                 "right": pyxel.KEY_D,
@@ -51,6 +55,10 @@ class Chef:
                 "down": pyxel.KEY_S,
                 "interact": pyxel.KEY_LSHIFT
             }
+
+            self.__top_limit = 96
+            self.__bottom_limit = 164
+
 
         
         # Animation speed
@@ -101,11 +109,11 @@ class Chef:
             else:
                 self.__image = self.__sprites["left_walk"]
 
-        elif direction == 'down' and self.y + self.__sprites["down"][4] < self.board.size[1]:
+        elif direction == 'down' and self.y + self.__sprites["down"][4] < self.__bottom_limit:
             self.y += 1
             self.__image = self.__sprites["down"]
 
-        elif direction == 'up' and self.y > 32:
+        elif direction == 'up' and self.y > self.__top_limit:
             self.y -= 1
             self.__image = self.__sprites["up"]
 

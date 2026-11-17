@@ -1,4 +1,4 @@
-from components.station import Station
+from components.stations.station import Station
 
 class Floor:
     """ Docs... """
@@ -17,10 +17,9 @@ class Floor:
                   (12 * ("",)), (12 * ("",)), (12 * ("",)),
                   ("tom", "pot", "fre", "fre", "fre", "brd", "fre", "pan", "rtn", "plt", "fre", "fre"))
 
-    def draw(self):
-        for row in range(len(self.LAYOUT)):
-            for station in range(len(self.LAYOUT[row])):
-                Station(16 * station, 16 * row + 32, self.LAYOUT[row][station]).draw()
+    def draw(self, row):
+        for station in range(len(self.LAYOUT[row])):
+            Station(16 * station, 16 * row + 32, self.LAYOUT[row][station]).draw()
 
 
 
