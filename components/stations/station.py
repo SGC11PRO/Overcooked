@@ -5,7 +5,8 @@ class Station:
     It will adjust according to what type of station it is.
     Examples are cutting boards, blenders, pan, ingredient drawer, free worktop ..."""
 
-    def __init__(self, x: int, y: int, type: str):
+    # dont use "type" for variable names, as it is a reserved word
+    def __init__(self, x: int, y: int, station_type: str):
         """
         Initializes a new Station instance.
 
@@ -15,10 +16,9 @@ class Station:
         """
         self.x = x
         self.y = y
-        self.type = type
 
         # self.holding will also be a string with the name of the ingredient or utensil class (lowercase) that is being held on the station.
-        self.holding = None
+        self.holding = ""
 
         self.images = {"oni": (0, 56, 48, 16, 16), "egg": (0, 88, 48, 16, 16), "cho": (0, 104, 48, 16, 16), "tom": (0, 72, 48, 16, 16), "pot": (0, 120, 48, 16, 16),
                        "brd": (0, 0, 48, 16, 16), "ble": (0, 0, 48, 16, 16), "pan": (0, 24, 48, 16, 16), "plt": (0, 0, 48, 16, 16), "srv": (0, 40, 64, 16, 16),
@@ -27,7 +27,10 @@ class Station:
 
         # self.objects = {...} -> to be completed
         
-        self.image = self.images[self.type]
+        # Defined after self.images because to validate the property, we need to check if the type is in self.images.keys()
+        self.station_type = station_type
+        self.image = self.images[self.station_type]
+
 
     def draw(self):
         """This method will draw the station on the screen (executed every frame)"""
@@ -45,8 +48,8 @@ class Station:
         return self.__y
 
     @property
-    def type(self) -> str:
-        return self.__type
+    def station_type(self) -> str:
+        return self.__station_type
 
     @property
     def holding(self) -> str:
@@ -71,14 +74,14 @@ class Station:
         else:
             self.__y = y
 
-    @type.setter
-    def type(self, type: str):
-        if not isinstance(type, str):
+    @station_type.setter
+    def station_type(self, station_type: str):
+        if not isinstance(station_type, str):
             raise TypeError('station type must be a string')
-        elif type not in self.images.keys():
+        elif station_type not in self.images.keys():
             raise ValueError('not a valid station type')
         else:
-            self.__type = type
+            self.__station_type = station_type
 
     @holding.setter
     def holding(self, holding: str):
