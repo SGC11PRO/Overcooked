@@ -19,6 +19,9 @@ class Chef:
 
         self.has_dish = False
 
+        self.collision_x = (0, 14)
+        self.collision_y = (16, 28)
+
         self.__sprites = {
             # Every chef must be in a different row
             # Chef 1 in Row 0, Chef 2 in Row 32 ...
@@ -94,32 +97,62 @@ class Chef:
         
         # Movement logic
         if direction == 'right' and self.x + self.__sprites["down"][3] < self.board.size[0]:
-            self.x += 1
-            # Walking animation
-            if self.board.main_timer.frame_count % self.animation_speed < self.animation_speed / 2:
-                self.__image = self.__sprites["right"]
-            else:
-                self.__image = self.__sprites["right_walk"]
+            can_move = True
+            for station in floor.stations:
+                if station.station_type != "":
+                    if ((station.x <= self.x + self.collision_x[1] <= station.x + 16) and
+                        ((station.y + 8 <= self.y + self.collision_y[0] <= station.y + 16) or
+                        (station.y + 8 <= self.y + self.collision_y[1] <= station.y + 16))):
+                        can_move = False
+                        break
+            if can_move:
+                self.x += 1
+                # Walking animation
+                if self.board.main_timer.frame_count % self.animation_speed < self.animation_speed / 2:
+                    self.__image = self.__sprites["right"]
+                else:
+                    self.__image = self.__sprites["right_walk"]
             
         elif direction == 'left' and self.x > 0:
-            self.x -= 1
-            # Walking animation
-            if self.board.main_timer.frame_count % self.animation_speed < self.animation_speed / 2:
-                self.__image = self.__sprites["left"]
-            else:
-                self.__image = self.__sprites["left_walk"]
+            can_move = True
+            for station in floor.stations:
+                if station.station_type != "":
+                    if ((station.x <= self.x + self.collision_x[0] <= station.x + 16) and
+                        ((station.y + 8 <= self.y + self.collision_y[0] <= station.y + 16) or
+                        (station.y + 8 <= self.y + self.collision_y[1] <= station.y + 16))):
+                        can_move = False
+                        break
+            if can_move:
+                self.x -= 1
+                # Walking animation
+                if self.board.main_timer.frame_count % self.animation_speed < self.animation_speed / 2:
+                    self.__image = self.__sprites["left"]
+                else:
+                    self.__image = self.__sprites["left_walk"]
 
         elif direction == 'down':
             self.__image = self.__sprites["down"]
-            if self.y + self.__sprites["down"][4] < self.__bottom_limit:
+            can_move = True
+            for station in floor.stations:
+                if station.station_type != "":
+                    if ((station.y + 8 <= self.y + self.collision_y[1] <= station.y + 16) and
+                        ((station.x <= self.x + self.collision_x[0] <= station.x + 16) or
+                        (station.x <= self.x + self.collision_x[1] <= station.x + 16))):
+                        can_move = False
+                        break
+            if can_move:
                 self.y += 1
 
         elif direction == 'up':
             self.__image = self.__sprites["up"]
             can_move = True
             for station in floor.stations:
-                if station.y <= self.y <= station.y + 16 and station.type != "":
-                    can_move = False
+                if station.station_type != "":
+                    if ((station.y + 8 <= self.y + self.collision_y[0] <= station.y + 16) and
+                        ((station.x <= self.x + self.collision_x[0] <= station.x + 16) or
+                        (station.x <= self.x + self.collision_x[1] <= station.x + 16))):
+                        can_move = False
+                        break
             if can_move:
                 self.y -= 1
 
@@ -153,13 +186,8 @@ class Chef:
         self.interaction_timer.frame_count = 0
         self.interaction_timer.total_seconds = time
         
-<<<<<<< HEAD
     def update(self, board):
 
-=======
-    def update(self):
-        """Executed on every frame"""
->>>>>>> e98f18af13538b77b04e5cf9718ee7431612c79a
         # Interaction timer
         self.interaction_timer.update(self.board.fps)
         if self.interaction_timer.total_seconds == 0:
