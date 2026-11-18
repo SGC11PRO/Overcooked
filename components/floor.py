@@ -22,12 +22,16 @@ class Floor:
             (12 * ("",)), (12 * ("",)), (12 * ("",)),
             ("tom", "pot", "fre", "fre", "fre", "brd", "fre", "pan", "rtn", "plt", "fre", "fre")
         )
+        self.tiles = []
         self.stations = []
 
     def draw(self, row):
         """This method will draw the floor on the screen (executed every frame)"""
-        for station in range(len(self.__LAYOUT[row])):
-            self.stations.append(Station(16 * station, 16 * row + 32, self.__LAYOUT[row][station]).draw())
+        for tile in range(len(self.__LAYOUT[row])):
+            self.tiles.append(Station(16 * tile, 16 * row + 32, self.__LAYOUT[row][tile]).draw())
+
+            if self.__LAYOUT[row][tile] != "fre" and self.__LAYOUT[row][tile] != "":
+                self.stations.append(Station(16 * tile, 16 * row + 32, self.__LAYOUT[row][tile]))
 
 
 

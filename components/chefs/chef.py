@@ -98,15 +98,18 @@ class Chef:
         # Movement logic
         if direction == 'right' and self.x + self.__sprites["down"][3] < self.board.size[0]:
             can_move = True
+            
             for station in floor.stations:
-                if station.station_type != "":
-                    if ((station.x <= self.x + self.collision_x[1] <= station.x + 16) and
-                        ((station.y + 8 <= self.y + self.collision_y[0] <= station.y + 16) or
-                        (station.y + 8 <= self.y + self.collision_y[1] <= station.y + 16))):
+                if ((station.x <= self.x + self.collision_x[1] <= station.x + 16) 
+                    and ((station.y + 8 <= self.y + self.collision_y[0] <= station.y + 16) or (station.y + 8 <= self.y + self.collision_y[1] <= station.y + 16))):
                         can_move = False
-                        break
+
+            print(can_move)
+            print(floor.stations)
+            # move
             if can_move:
                 self.x += 1
+
                 # Walking animation
                 if self.board.main_timer.frame_count % self.animation_speed < self.animation_speed / 2:
                     self.__image = self.__sprites["right"]

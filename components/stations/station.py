@@ -38,6 +38,14 @@ class Station:
         return self
 
 
+    # Special methods --------------------------------------
+    def __str__(self):
+        return f"Station(type={self.station_type}, x={self.x}, y={self.y}, holding={self.holding})"
+    
+    def __repr__(self):
+        return self.__str__()
+
+
     # ERROR HANDLING ----------------------------------------
     # Properties
     @property
