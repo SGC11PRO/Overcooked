@@ -2,11 +2,11 @@ import pyxel
 from components.service_board.timer import Timer
 
 class Chef:
-    """Documentation..."""
+    """This class will store the chef instance, and will handle its movement and actions. It will also draw the chef on the screen."""
     
     def __init__(self, x: int, y: int, id: int, board):
         """
-        Init method
+        Initializes a new Chef with the given position and the id (for player 1 or player 2)
         :param x: x position
         :param y: y position
         :param id: id of the chef (Either 0 or 1)
@@ -150,7 +150,7 @@ class Chef:
         self.interaction_timer.total_seconds = time
         
     def update(self):
-
+        """Executed on every frame"""
         # Interaction timer
         self.interaction_timer.update(self.board.fps)
         if self.interaction_timer.total_seconds == 0:
