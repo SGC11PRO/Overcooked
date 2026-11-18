@@ -1,7 +1,9 @@
 from components.stations.station import Station
 
 class Floor:
-    """ Docs... """
+    """This class will store the floor layout of the game, and will draw it on the screen. 
+    It will also store the stations that are on the floor, and will draw them on the screen."""
+
     def __init__(self):
 
         self.x = 0
@@ -11,24 +13,30 @@ class Floor:
         # "brd": Board, "ble": Blender, "pan": Pan, "plt": Plates, "srv": Serve
         # "pss": Pass, "bin": Bin, "snk": Sink, "rtn": Return
         # "fre": Free, "wal": Wall
-        self.LAYOUT = (
+
+        # (read-only)
+        self.__LAYOUT = (
             ("oni", "egg", "cho", "fre", "brd", "fre", "ble", "fre", "fre", "fre", "fre", "srv"),
             (12 * ("",)), (12 * ("",)), (12 * ("",)),
             ("wal", "pss", "wal", "pss", "wal", "bin", "wal", "pss", "wal", "snk", "pss", "wal"),
             (12 * ("",)), (12 * ("",)), (12 * ("",)),
             ("tom", "pot", "fre", "fre", "fre", "brd", "fre", "pan", "rtn", "plt", "fre", "fre")
         )
+        self.stations = []
 
     def draw(self, row):
+<<<<<<< HEAD
         for station in range(len(self.LAYOUT[row])):
-            Station(16 * station, 16 * row + 32, self.LAYOUT[row][station]).draw()
+            self.stations.append(Station(16 * station, 16 * row + 32, self.LAYOUT[row][station]).draw())
+=======
+        """This method will draw the floor on the screen (executed every frame)"""
+        for station in range(len(self.__LAYOUT[row])):
+            Station(16 * station, 16 * row + 32, self.__LAYOUT[row][station]).draw()
+>>>>>>> e98f18af13538b77b04e5cf9718ee7431612c79a
 
 
 
-
-
-
-    # ERROR HANDLING -------------------------------------
+    # ERROR HANDLING ----------------------------------------
     # properties
     @property
     def x(self) -> int:
@@ -37,6 +45,10 @@ class Floor:
     @property
     def y(self) -> int:
         return self.__y
+
+    @property 
+    def layout(self) -> tuple:
+        return self.__LAYOUT
 
 
     # setters

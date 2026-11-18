@@ -2,11 +2,11 @@ import pyxel
 from components.service_board.timer import Timer
 
 class Chef:
-    """Documentation..."""
+    """This class will store the chef instance, and will handle its movement and actions. It will also draw the chef on the screen."""
     
     def __init__(self, x: int, y: int, id: int, board):
         """
-        Init method
+        Initializes a new Chef with the given position and the id (for player 1 or player 2)
         :param x: x position
         :param y: y position
         :param id: id of the chef (Either 0 or 1)
@@ -74,7 +74,7 @@ class Chef:
         
         
     # CHEF BEHAVIOUR ------------------------------------------
-    def move(self, direction: str):
+    def move(self, direction: str, floor):
         """
         Move the chef inside the kitchen, which starts at y=32. Collissions not implemented
         :param direction: string "up", "down", "left", "right"
@@ -116,7 +116,11 @@ class Chef:
 
         elif direction == 'up':
             self.__image = self.__sprites["up"]
-            if self.y > self.__top_limit:
+            can_move = True
+            for station in floor.stations:
+                if station.y <= self.y <= station.y + 16 and station.type != "":
+                    can_move = False
+            if can_move:
                 self.y -= 1
 
     def stop(self, direction: str):
@@ -149,8 +153,13 @@ class Chef:
         self.interaction_timer.frame_count = 0
         self.interaction_timer.total_seconds = time
         
-    def update(self):
+<<<<<<< HEAD
+    def update(self, board):
 
+=======
+    def update(self):
+        """Executed on every frame"""
+>>>>>>> e98f18af13538b77b04e5cf9718ee7431612c79a
         # Interaction timer
         self.interaction_timer.update(self.board.fps)
         if self.interaction_timer.total_seconds == 0:
@@ -158,13 +167,13 @@ class Chef:
 
         # Input detection
         if pyxel.btn(self.__inputs["up"]):
-            self.move('up')
+            self.move('up', board.floor)
         if pyxel.btn(self.__inputs["down"]):
-            self.move('down')
+            self.move('down', board.floor)
         if pyxel.btn(self.__inputs["right"]) and not pyxel.btn(self.__inputs["left"]):
-            self.move('right')
+            self.move('right', board.floor)
         if pyxel.btn(self.__inputs["left"]) and not pyxel.btn(self.__inputs["right"]):
-            self.move('left')
+            self.move('left', board.floor)
         if pyxel.btnr(self.__inputs["right"]):
             self.stop('right')
         if pyxel.btnr(self.__inputs["left"]):

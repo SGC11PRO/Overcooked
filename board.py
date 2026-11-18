@@ -9,11 +9,11 @@ from components.ingredient import Ingredient
 from components.orders_creator import OrderCreator
 
 class Board:
-    """Documentation..."""
+    """This class contain all the logic of the game, and will be the main class that will be executed by pyxel."""
     
     def __init__(self, board_size: tuple):
         """
-        Documentation...
+        Initializes a new Board instance.
         :param board_size: Tuple (width, height) for board
         """
         self.size = board_size
@@ -59,6 +59,9 @@ class Board:
     # To complete an order just call board.complete_order(order_id) and it will search for the order with that id and complete it. 
     # If the order is not found, it will return False.
     def complete_order(self, order_id: int) -> bool:
+        """This method will complete an order with the given id. It will call the order class and execute .complete() method.
+        :returns: True if the order is found and completed, False otherwise."""
+
         for order in self.order_list:
             if order.id == order_id:
                 order.complete()
@@ -69,6 +72,12 @@ class Board:
     
     # Debugging only (to complete oldes order)
     def complete_oldest_order(self) ->  bool:
+        """T
+        ONLY FOR DEBUGGING PURPOSES
+
+        This method will complete the oldest order in the order list. It will call the order class and execute .complete() method.
+        :returns: True if the order is found and completed, False otherwise."""
+
         for order in self.order_list:
             if order.available:
                 return self.complete_order(order.id)
@@ -83,8 +92,8 @@ class Board:
         self.main_timer.update(self.fps)
 
         # Updates chefs
-        self.chef1.update()
-        self.chef2.update()
+        self.chef1.update(self)
+        self.chef2.update(self)
 
         # Create orders
         self.order_creator.update(self)
