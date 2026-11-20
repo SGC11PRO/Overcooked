@@ -68,8 +68,8 @@ class Board:
                 return True
             
         return False
-    
-    
+
+
     # Debugging only (to complete oldes order)
     def complete_oldest_order(self) ->  bool:
         """
@@ -83,8 +83,18 @@ class Board:
                 return self.complete_order(order.id)
         
         return False
-    
+
     # BOARD LOGIC ------------------------------------------
+    def __draw_chefs_before_row(self, row: int, drawn_chefs: list):
+        """Draw chefs that are behind the stations in this row."""
+        row_bottom = 32 + 16 * row + 16
+
+        # If the chef is above the bottom of the row (meaning that the chef is behind the stations in this row), draw the chef first
+        for chef in (self.chef1, self.chef2):
+            if chef not in drawn_chefs and chef.y + 28 <= row_bottom:
+                chef.draw()
+                drawn_chefs.append(chef)
+
     def update(self):
         """Executed in every frame."""
 
@@ -126,25 +136,21 @@ class Board:
 
 
         # Objects ==========================================
-        # Draw chefs
-        self.floor.draw(0)
-        self.chef1.draw()
+        # Draw rows and chefs from back to front.
+        drawn_chefs = []
+        for row in range(len(self.floor.layout)):
+            self.__draw_chefs_before_row(row, drawn_chefs)
 
-        self.floor.draw(1)
-        self.floor.draw(2)
-        self.floor.draw(3)
-        
-        self.floor.draw(5)
-        self.floor.draw(4)
-        self.floor.draw(6)
-        
-        self.floor.draw(7)
-        self.chef2.draw()
-        self.floor.draw(8)
+            # draw the rows after drawing the chefs that are behind the stations in this row
+            self.floor.draw(row)
+
+        # The chefs that are not in drawn_chefs are in front of all the stations, so we draw them now (after the stations)
+        for chef in (self.chef1, self.chef2):
+            if chef not in drawn_chefs:
+                chef.draw()
 
 
 
-        
         # Text and UI =========================================================
         # pyxel.text(10, 8, f"Chef 1: ({self.chef1.x}, {self.chef1.y})", 7)    
         # pyxel.text(10, 18, f"Chef 2: ({self.chef2.x}, {self.chef2.y})", 7)
