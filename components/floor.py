@@ -39,6 +39,7 @@ class Floor:
             self.tiles.append(Station(16 * tile, 16 * row + 32, self.__LAYOUT[row][tile]).draw())
 
             if self.__LAYOUT[row][tile] != "":
+                # self.stations will only store the stations that are collidable (station_type != "")
                 self.stations.append(Station(16 * tile, 16 * row + 32, self.__LAYOUT[row][tile]))
 
 

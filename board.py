@@ -72,7 +72,7 @@ class Board:
     
     # Debugging only (to complete oldes order)
     def complete_oldest_order(self) ->  bool:
-        """T
+        """
         ONLY FOR DEBUGGING PURPOSES
 
         This method will complete the oldest order in the order list. It will call the order class and execute .complete() method.
