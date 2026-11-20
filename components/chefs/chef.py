@@ -23,7 +23,7 @@ class Chef:
 
         # Chef collision box size: collision_x = (left offset, right offset), collision_y = (top offset, bottom offset)
         self.collision_x = (0, 14)
-        self.collision_y = (16, 28)
+        self.collision_y = (20, 30)
 
         self.__sprites = {
             # Every chef must be in a different row
