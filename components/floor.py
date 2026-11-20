@@ -11,15 +11,19 @@ class Floor:
 
         # "oni": Onion, "egg": Egg, "cho": Chorizo, "tom": Tomato, "pot": Potato
         # "brd": Board, "ble": Blender, "pan": Pan, "plt": Plates, "srv": Serve
-        # "pss": Pass, "bin": Bin, "snk": Sink, "rtn": Return
-        # "fre": Free, "wal": Wall
+        # "pss": Pass table, "bin": Bin, "snk": Sink, "rtn": Return
+        # "fre": Free table, "wal": Wall
 
         # (read-only)
         self.__LAYOUT = (
             ("oni", "egg", "cho", "fre", "brd", "fre", "ble", "fre", "fre", "fre", "fre", "srv"),
-            (12 * ("",)), (12 * ("",)), (12 * ("",)),
+            (12 * ("",)), 
+            ("", "", "", "", "brd", "fre", "", "fre", "", "fre", "fre", ""),
+            (12 * ("",)),
             ("wal", "pss", "wal", "pss", "wal", "bin", "wal", "pss", "wal", "snk", "pss", "wal"),
-            (12 * ("",)), (12 * ("",)), (12 * ("",)),
+            (12 * ("",)), 
+            (12 * ("",)), 
+            (12 * ("",)),
             ("tom", "pot", "fre", "fre", "fre", "brd", "fre", "pan", "rtn", "plt", "fre", "fre")
         )
         self.tiles = []
@@ -27,10 +31,14 @@ class Floor:
 
     def draw(self, row):
         """This method will draw the floor on the screen (executed every frame)"""
+        if row == 0:
+            self.tiles = []
+            self.stations = []
+
         for tile in range(len(self.__LAYOUT[row])):
             self.tiles.append(Station(16 * tile, 16 * row + 32, self.__LAYOUT[row][tile]).draw())
 
-            if self.__LAYOUT[row][tile] != "fre" and self.__LAYOUT[row][tile] != "":
+            if self.__LAYOUT[row][tile] != "":
                 self.stations.append(Station(16 * tile, 16 * row + 32, self.__LAYOUT[row][tile]))
 
 

@@ -128,18 +128,21 @@ class Board:
         # Objects ==========================================
         # Draw chefs
         self.floor.draw(0)
+        self.chef1.draw()
+
         self.floor.draw(1)
         self.floor.draw(2)
         self.floor.draw(3)
+        
         self.floor.draw(5)
         self.floor.draw(4)
         self.floor.draw(6)
+        
         self.floor.draw(7)
+        self.chef2.draw()
         self.floor.draw(8)
 
 
-        self.chef1.draw()
-        self.chef2.draw()
 
         
         # Text and UI =========================================================
