@@ -18,7 +18,7 @@ class Floor:
         self.__LAYOUT = (
             ("oni", "egg", "cho", "fre", "brd", "fre", "ble", "fre", "fre", "fre", "fre", "srv"),
             (12 * ("",)), 
-            ("", "", "", "", "oni", "pot", "", "cho", "", "pss", "pss", ""),
+            (12 * ("",)),
             (12 * ("",)),
             ("wal", "pss", "wal", "pss", "wal", "bin", "wal", "pss", "wal", "snk", "pss", "wal"),
             (12 * ("",)), 
