@@ -23,7 +23,7 @@ class Station:
         self.images = {"oni": (0, 56, 48, 16, 16), "egg": (0, 88, 48, 16, 16), "cho": (0, 104, 48, 16, 16), "tom": (0, 72, 48, 16, 16), "pot": (0, 120, 48, 16, 16),
                        "brd": (0, 0, 48, 16, 16), "ble": (0, 0, 48, 16, 16), "pan": (0, 24, 48, 16, 16), "plt": (0, 0, 48, 16, 16), "srv": (0, 40, 64, 16, 16),
                        "pss": (0, 0, 64, 16, 16), "bin": (0, 24, 64, 16, 16), "snk": (0, 40, 48, 16, 16), "rtn": (0, 0, 48, 16, 16),
-                       "fre": (0, 0, 48, 16, 16), "wal": (0, 0, 48, 16, 16), "": (0, 0, 0, 16, 16)}
+                       "fre": (0, 0, 48, 16, 16), "wal": (0, 0, 48, 16, 16), "": (0, 0, 112, 16, 16)}
 
         # self.objects = {...} -> to be completed
         
@@ -35,6 +35,15 @@ class Station:
     def draw(self):
         """This method will draw the station on the screen (executed every frame)"""
         pyxel.blt(self.x, self.y, *self.image, 32)
+        return self
+
+
+    # Special methods --------------------------------------
+    def __str__(self):
+        return f"Station(type={self.station_type}, x={self.x}, y={self.y}, holding={self.holding})"
+    
+    def __repr__(self):
+        return self.__str__()
 
 
     # ERROR HANDLING ----------------------------------------

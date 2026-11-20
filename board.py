@@ -10,9 +10,11 @@ from components.orders_creator import OrderCreator
 
 class Board:
     """This class contain all the logic of the game, and will be the main class that will be executed by pyxel."""
+    """This class contain all the logic of the game, and will be the main class that will be executed by pyxel."""
     
     def __init__(self, board_size: tuple):
         """
+        Initializes a new Board instance.
         Initializes a new Board instance.
         :param board_size: Tuple (width, height) for board
         """
@@ -62,17 +64,20 @@ class Board:
         """This method will complete an order with the given id. It will call the order class and execute .complete() method.
         :returns: True if the order is found and completed, False otherwise."""
 
+        """This method will complete an order with the given id. It will call the order class and execute .complete() method.
+        :returns: True if the order is found and completed, False otherwise."""
+
         for order in self.order_list:
             if order.id == order_id:
                 order.complete()
                 return True
             
         return False
-    
-    
+
+
     # Debugging only (to complete oldes order)
     def complete_oldest_order(self) ->  bool:
-        """T
+        """
         ONLY FOR DEBUGGING PURPOSES
 
         This method will complete the oldest order in the order list. It will call the order class and execute .complete() method.
@@ -83,8 +88,18 @@ class Board:
                 return self.complete_order(order.id)
         
         return False
-    
+
     # BOARD LOGIC ------------------------------------------
+    def __draw_chefs_before_row(self, row: int, drawn_chefs: list):
+        """Draw chefs that are behind the stations in this row."""
+        row_bottom = 32 + 16 * row + 16
+
+        # If the chef is above the bottom of the row (meaning that the chef is behind the stations in this row), draw the chef first
+        for chef in (self.chef1, self.chef2):
+            if chef not in drawn_chefs and chef.y + 28 <= row_bottom:
+                chef.draw()
+                drawn_chefs.append(chef)
+
     def update(self):
         """Executed in every frame."""
 
@@ -92,8 +107,8 @@ class Board:
         self.main_timer.update(self.fps)
 
         # Updates chefs
-        self.chef1.update()
-        self.chef2.update()
+        self.chef1.update(self)
+        self.chef2.update(self)
 
         # Create orders
         self.order_creator.update(self)
@@ -126,22 +141,21 @@ class Board:
 
 
         # Objects ==========================================
-        # Draw chefs
-        self.floor.draw(0)
-        self.floor.draw(1)
-        self.floor.draw(2)
-        self.floor.draw(3)
+        # Draw rows and chefs from back to front.
+        drawn_chefs = []
+        for row in range(len(self.floor.layout)):
+            self.__draw_chefs_before_row(row, drawn_chefs)
 
-        self.chef1.draw()
-        self.floor.draw(4)
-        self.floor.draw(5)
-        self.floor.draw(6)
-        self.floor.draw(7)
+            # draw the rows after drawing the chefs that are behind the stations in this row
+            self.floor.draw(row)
 
-        self.chef2.draw()
-        self.floor.draw(8)
+        # The chefs that are not in drawn_chefs are in front of all the stations, so we draw them now (after the stations)
+        for chef in (self.chef1, self.chef2):
+            if chef not in drawn_chefs:
+                chef.draw()
 
-        
+
+
         # Text and UI =========================================================
         # pyxel.text(10, 8, f"Chef 1: ({self.chef1.x}, {self.chef1.y})", 7)    
         # pyxel.text(10, 18, f"Chef 2: ({self.chef2.x}, {self.chef2.y})", 7)

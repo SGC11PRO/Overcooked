@@ -3,9 +3,11 @@ from components.service_board.timer import Timer
 
 class Chef:
     """This class will store the chef instance, and will handle its movement and actions. It will also draw the chef on the screen."""
+    """This class will store the chef instance, and will handle its movement and actions. It will also draw the chef on the screen."""
     
     def __init__(self, x: int, y: int, id: int, board):
         """
+        Initializes a new Chef with the given position and the id (for player 1 or player 2)
         Initializes a new Chef with the given position and the id (for player 1 or player 2)
         :param x: x position
         :param y: y position
@@ -18,6 +20,10 @@ class Chef:
         self.board = board
 
         self.has_dish = False
+
+        # Chef collision box size: collision_x = (left offset, right offset), collision_y = (top offset, bottom offset)
+        self.collision_x = (0, 14)
+        self.collision_y = (16, 28)
 
         self.__sprites = {
             # Every chef must be in a different row
@@ -74,7 +80,39 @@ class Chef:
         
         
     # CHEF BEHAVIOUR ------------------------------------------
-    def move(self, direction: str):
+    def __can_move_to(self, x: int, y: int, floor) -> bool:
+        """Check if the chef can move to the given position.
+        :param x: x position
+        :param y: y position
+        :param floor: Floor object to check for collisions
+        :return: False if the chef is inside the station's collision box, True otherwise
+        """
+
+        # Calculate the chef's collision box
+        chef_left = x + self.collision_x[0]
+        chef_right = x + self.collision_x[1]
+        chef_top = y + self.collision_y[0]
+        chef_bottom = y + self.collision_y[1]
+
+        # Check for every collidable station (station_type != "") if the chef's collision box intersects with the station's collision box
+        for station in floor.stations:
+            if station.station_type != "":
+
+                # Calculate station's collision box (16px width, 8px height -> to make the chef more visually accurate)
+                station_left = station.x
+                station_right = station.x + 16
+                station_top = station.y + 8
+                station_bottom = station.y + 16
+
+                # __can_move = False if chef is inside the station's collision box, True otherwise
+                if (chef_left < station_right and chef_right > station_left
+                    and chef_top < station_bottom and chef_bottom > station_top):
+                    
+                    return False
+
+        return True
+
+    def move(self, direction: str, floor):
         """
         Move the chef inside the kitchen, which starts at y=32. Collissions not implemented
         :param direction: string "up", "down", "left", "right"
@@ -94,29 +132,32 @@ class Chef:
         
         # Movement logic
         if direction == 'right' and self.x + self.__sprites["down"][3] < self.board.size[0]:
-            self.x += 1
-            # Walking animation
-            if self.board.main_timer.frame_count % self.animation_speed < self.animation_speed / 2:
-                self.__image = self.__sprites["right"]
-            else:
-                self.__image = self.__sprites["right_walk"]
+            if self.__can_move_to(self.x + 1, self.y, floor):
+                self.x += 1
+
+                # Walking animation
+                if self.board.main_timer.frame_count % self.animation_speed < self.animation_speed / 2:
+                    self.__image = self.__sprites["right"]
+                else:
+                    self.__image = self.__sprites["right_walk"]
             
         elif direction == 'left' and self.x > 0:
-            self.x -= 1
-            # Walking animation
-            if self.board.main_timer.frame_count % self.animation_speed < self.animation_speed / 2:
-                self.__image = self.__sprites["left"]
-            else:
-                self.__image = self.__sprites["left_walk"]
+            if self.__can_move_to(self.x - 1, self.y, floor):
+                self.x -= 1
+                # Walking animation
+                if self.board.main_timer.frame_count % self.animation_speed < self.animation_speed / 2:
+                    self.__image = self.__sprites["left"]
+                else:
+                    self.__image = self.__sprites["left_walk"]
 
         elif direction == 'down':
             self.__image = self.__sprites["down"]
-            if self.y + self.__sprites["down"][4] < self.__bottom_limit:
+            if self.__can_move_to(self.x, self.y + 1, floor):
                 self.y += 1
 
         elif direction == 'up':
             self.__image = self.__sprites["up"]
-            if self.y > self.__top_limit:
+            if self.__can_move_to(self.x, self.y - 1, floor):
                 self.y -= 1
 
     def stop(self, direction: str):
@@ -149,8 +190,8 @@ class Chef:
         self.interaction_timer.frame_count = 0
         self.interaction_timer.total_seconds = time
         
-    def update(self):
-        """Executed on every frame"""
+    def update(self, board):
+
         # Interaction timer
         self.interaction_timer.update(self.board.fps)
         if self.interaction_timer.total_seconds == 0:
@@ -158,13 +199,13 @@ class Chef:
 
         # Input detection
         if pyxel.btn(self.__inputs["up"]):
-            self.move('up')
+            self.move('up', board.floor)
         if pyxel.btn(self.__inputs["down"]):
-            self.move('down')
+            self.move('down', board.floor)
         if pyxel.btn(self.__inputs["right"]) and not pyxel.btn(self.__inputs["left"]):
-            self.move('right')
+            self.move('right', board.floor)
         if pyxel.btn(self.__inputs["left"]) and not pyxel.btn(self.__inputs["right"]):
-            self.move('left')
+            self.move('left', board.floor)
         if pyxel.btnr(self.__inputs["right"]):
             self.stop('right')
         if pyxel.btnr(self.__inputs["left"]):
